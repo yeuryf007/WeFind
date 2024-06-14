@@ -130,6 +130,12 @@
 
 /* Form Component */
 .form_textarea {
+  @apply w-full flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0;
+}
+.form_textarea_sm {
+  @apply flex rounded-lg h-[50px] w-[300px] mt-2 p-3 text-sm text-gray-500 outline-0;
+}
+.form_textarea_desc {
   @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
@@ -147,7 +153,7 @@
 }
 
 .dropdown_link {
-  @apply text-sm font-inter text-gray-700 hover:text-gray-500 font-medium;
+  @apply text-sm font-inter text-gray-700 hover:underline font-medium;
 }
 
 /* PromptCard Component */
