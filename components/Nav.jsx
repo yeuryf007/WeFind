@@ -33,13 +33,13 @@ const Nav = () => {
         {usuariologeado ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href="/crear_post" className='black_btn'>
-              Crear Post
+              Nuevo Producto
             </Link>
 
-            <button type='button' onClick={signOut} className='outline_btn'> Sign Out</button>
+            <button type='button' onClick={signOut} className='outline_btn'> Cerrar sesión</button>
 
             <Link href="/profile">
-              <Image src="/assets/images/logo.svg" width={37} height={37} className="rounded-full" alt='profile'/>
+              <Image src="/assets/images/profile.svg" width={37} height={37} className="rounded-full" alt='profile'/>
             </Link>
           </div>
         ): (
@@ -47,7 +47,7 @@ const Nav = () => {
             {providers &&
               Object.values(providers).map((provider) => (
                 <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                  Sign In
+                  Ingresar
                 </button>
               ))
             }
@@ -61,7 +61,7 @@ const Nav = () => {
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
             <div className='flex'>
-              <Image src="/assets/images/logo.svg" width={37} height={37} className="rounded-full" alt='profile'
+              <Image src="/assets/images/profile.svg" width={37} height={37} className="rounded-full" alt='profile'
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
@@ -77,7 +77,7 @@ const Nav = () => {
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
 
-                    Crear
+                    Nuevo
                   </Link>
 
                   <button type='button' className="mt-5 w-full black_btn" onClick={() => {
