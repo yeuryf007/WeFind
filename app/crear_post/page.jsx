@@ -14,8 +14,10 @@ const CrearPost = () => {
   })
 
   const crearpost = async (e) => {
-
+    e.preventDefault();
+    setsubmitting(true);
   }
+  
   return (
     <Form 
     type="Añadir"
