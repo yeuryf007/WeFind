@@ -5,7 +5,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
   return(
     <section className="w-full max-w-full flex-start flex-col">
       <h1 className='head_text text-left'>
-        <span className='orange_gradient'>{type} productos</span>
+        <span className='head_text'>{type} productos</span>
         </h1>
         <p className='desc text-left max-w-md'>
           Hey muy buenas a todos guapisimos, mi nombre es Vegetta777, en un gameplay directo de VS Code. En el episodio de hoy,
@@ -14,7 +14,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
 
         <form onSubmit={handleSubmit} className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'>
           <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'> Nombre del Producto</span>
+            <span className='font-inter font-semibold text-base text-gray-700'> Nombre del Producto</span>
 
             <textarea
             value={post.prompt}
@@ -25,7 +25,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           </label>
 
           <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Precio del Producto</span>
+            <span className='font-inter font-semibold text-base text-gray-700'>Precio del Producto</span>
 
             <textarea
             value={post.prompt}
@@ -36,7 +36,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           </label>
 
           <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'> Descripción del Producto</span>
+            <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
 
             <textarea
             value={post.prompt}
