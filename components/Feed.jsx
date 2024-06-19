@@ -13,7 +13,7 @@ const Feed = () => {
       <form className="relative w-full flex-center">
         <input
         type="text"
-        placeholder="Busca un producto que desees"
+        placeholder="Escribe lo que quieras buscar"
         value={searchText}
         onChange={handleSearchChange}
         required

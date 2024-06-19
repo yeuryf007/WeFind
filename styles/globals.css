@@ -9,7 +9,13 @@
 */
 
 
+#navbars{
+  background-color: #01A1FD;
+}
 
+.otherpages{
+  background-color: white;
+}
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -88,7 +94,7 @@
 }
 
 .head_text {
-  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
+  @apply mt-5 text-5xl font-inter leading-[1.15] text-white sm:text-6xl;
 }
 
 .orange_gradient {
@@ -108,7 +114,7 @@
 }
 
 .search_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-3xl border border-gray-200 bg-white py-2.5 font-inter pl-5 pr-12 text-lg font-inter focus:border-black focus:outline-none focus:ring-0;
 }
 
 .copy_btn {
@@ -145,7 +151,7 @@
 
 /* Nav Component */
 .logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide;
+  @apply max-sm:hidden font-inter font-semibold text-lg text-black tracking-wide;
 }
 
 .dropdown {
