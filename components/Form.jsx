@@ -3,7 +3,7 @@ import Link from 'next/link';
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
   return(
-    <section className="w-full max-w-full flex-start flex-col">
+    <section className="w-full max-w-full flex-center flex-col">
       <h1 className='head_text text-left'>
         <span className='head_text'>{type} productos</span>
         </h1>
@@ -12,39 +12,53 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           haremos la pagina de {type} productos para la pagina web de WeFind.
         </p>
 
-        <form onSubmit={handleSubmit} className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'>
+        <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
+
+          <div className='flex flex-row'>
+
+          
+            <div className='w-1/2 flex flex-col pr-5 pd-5'>
+            Hey muy buenas a todos guapisimos, mi nombre es Vegetta777, en un gameplay directo de VS Code. En el episodio de hoy,
+            haremos la pagina de {type} productos para la pagina web de WeFind.
+            </div>
+            <div className='w-full'>
+              <label>
+                <span className='font-inter font-semibold text-base text-gray-700'> Nombre del Producto</span>
+
+                <textarea
+                value={post.prompt}
+                onChange={(e)=> setpost({...post, prompt: e.target.value})}
+                placeholder='Escriba el nombre del producto aquí'
+                required
+                className='form_textarea'/>
+              </label>
+
+              <label>
+                <span className='font-inter font-semibold text-base text-gray-700'>Precio del Producto</span>
+
+                <textarea
+                value={post.prompt}
+                onChange={(e)=> setpost({...post, prompt: e.target.value})}
+                placeholder='Escriba el precio'
+                required
+                className='form_textarea_sm'/>
+              </label>
+
+              
+            </div>
+
+          </div>
           <label>
-            <span className='font-inter font-semibold text-base text-gray-700'> Nombre del Producto</span>
+                <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
 
-            <textarea
-            value={post.prompt}
-            onChange={(e)=> setpost({...post, prompt: e.target.value})}
-            placeholder='Escriba el nombre del producto aquí'
-            required
-            className='form_textarea'/>
-          </label>
+                <textarea
+                value={post.prompt}
+                onChange={(e)=> setpost({...post, prompt: e.target.value})}
+                placeholder='Describa el producto'
+                required
+                className='form_textarea_desc'/>
+              </label>
 
-          <label>
-            <span className='font-inter font-semibold text-base text-gray-700'>Precio del Producto</span>
-
-            <textarea
-            value={post.prompt}
-            onChange={(e)=> setpost({...post, prompt: e.target.value})}
-            placeholder='Escriba el precio'
-            required
-            className='form_textarea_sm'/>
-          </label>
-
-          <label>
-            <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
-
-            <textarea
-            value={post.prompt}
-            onChange={(e)=> setpost({...post, prompt: e.target.value})}
-            placeholder='Describa el producto'
-            required
-            className='form_textarea_desc'/>
-          </label>
           <div className='flex-end mx-3 mb-5 gap-4'>
             <Link href="/" className='text-sm dropdown_link'> Cancel</Link>
 

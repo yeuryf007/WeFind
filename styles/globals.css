@@ -114,7 +114,11 @@
 }
 
 .search_input {
-  @apply block w-full rounded-3xl border border-gray-200 bg-white py-2.5 font-inter pl-5 pr-12 text-lg font-inter focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-full border border-gray-200 bg-white py-2.5 font-inter pl-5 text-lg focus:border-black focus:outline-none focus:ring-0;
+}
+
+.searchbar{
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden;
 }
 
 .copy_btn {
@@ -136,13 +140,13 @@
 
 /* Form Component */
 .form_textarea {
-  @apply w-full flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-3/4 flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 .form_textarea_sm {
-  @apply flex rounded-lg h-[50px] w-[300px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply flex rounded-lg h-[50px] w-[250px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 .form_textarea_desc {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg h-[150px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
 .form_input {
