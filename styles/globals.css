@@ -11,6 +11,11 @@
 
 #navbars{
   background-color: #01A1FD;
+  position: fixed;
+  top: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  z-index: 2;
 }
 
 .otherpages{
@@ -28,7 +33,7 @@
 }
 
 .main:before {
-  background: linear-gradient(rgba(2, 0, 36, 0) 0, #6FE3ED 100%);
+  background: linear-gradient(#01A1FD, #01A1FD 25%, #6FE3ED 100%);
   position: absolute;
   content: "";
   z-index: 2;
@@ -118,7 +123,7 @@
 }
 
 .searchbar{
-  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden;
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden rounded-full h-12;
 }
 
 .copy_btn {
@@ -135,7 +140,7 @@
 
 /* Feed Component */
 .feed {
-  @apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
+  @apply mt-16 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2;
 }
 
 /* Form Component */
@@ -146,11 +151,35 @@
   @apply flex rounded-lg h-[50px] w-[250px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 .form_textarea_desc {
-  @apply w-full flex rounded-lg h-[150px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg h-[1000px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
 .form_input {
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+}
+
+.file-select-img{
+  @apply w-1/2 h-52 flex-col pr-5 border-2 mr-4 relative inline-block rounded-lg;
+  background-color: white;
+  color: #BABABA;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
+}
+
+ .src-file{
+  cursor: pointer;
+  font-size: 10000px;
+  margin: 0;
+  opacity: 0;
+  outline: 0 none;
+  padding: 0;
+  position: absolute;
+  right: -1000px;
+  top: -1000px;
 }
 
 /* Nav Component */

@@ -1,15 +1,19 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
   return(
-    <section className="w-full max-w-full flex-center flex-col">
+    <section className="w-full max-w-full flex-center flex-col mt-24">
+
       <h1 className='head_text text-left'>
         <span className='head_text'>{type} productos</span>
         </h1>
+
         <p className='desc text-left max-w-md'>
-          Hey muy buenas a todos guapisimos, mi nombre es Vegetta777, en un gameplay directo de VS Code. En el episodio de hoy,
-          haremos la pagina de {type} productos para la pagina web de WeFind.
+            WeFind es una herramienta de busqueda de productos para que los clientes puedan descubrir productos cerca de ellos
+            y subir productos propios para que otros puedan encontrar.
+        
         </p>
 
         <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
@@ -17,11 +21,16 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           <div className='flex flex-row'>
 
           
-            <div className='w-1/2 flex flex-col pr-5 pd-5'>
-            Hey muy buenas a todos guapisimos, mi nombre es Vegetta777, en un gameplay directo de VS Code. En el episodio de hoy,
-            haremos la pagina de {type} productos para la pagina web de WeFind.
+            <div className='file-select-img'>
+            <Link href="/" className='flex gap-2 flex-center mt-8 mb-4'>
+              <Image src="/assets/images/add-image.svg" alt="Añadir imagen" width={70} height={30} className='object-contain'/>
+            </Link>
+              <input type='file' className='src-file'/>
+              Subir imagen
             </div>
+
             <div className='w-full'>
+
               <label>
                 <span className='font-inter font-semibold text-base text-gray-700'> Nombre del Producto</span>
 
@@ -37,8 +46,8 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
                 <span className='font-inter font-semibold text-base text-gray-700'>Precio del Producto</span>
 
                 <textarea
-                value={post.prompt}
-                onChange={(e)=> setpost({...post, prompt: e.target.value})}
+                //value={post.prompt}
+                //onChange={(e)=> setpost({...post, prompt: e.target.value})}
                 placeholder='Escriba el precio'
                 required
                 className='form_textarea_sm'/>
@@ -49,15 +58,15 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
 
           </div>
           <label>
-                <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
+            <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
 
-                <textarea
-                value={post.prompt}
-                onChange={(e)=> setpost({...post, prompt: e.target.value})}
-                placeholder='Describa el producto'
-                required
-                className='form_textarea_desc'/>
-              </label>
+            <textarea
+            //value={post.prompt}
+            //onChange={(e)=> setpost({...post, prompt: e.target.value})}
+            placeholder='Describa el producto'
+            required
+            className='form_textarea_desc'/>
+          </label>
 
           <div className='flex-end mx-3 mb-5 gap-4'>
             <Link href="/" className='text-sm dropdown_link'> Cancel</Link>
@@ -65,6 +74,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
             <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
               {submitting ? `${type}...` : type }
             </button>
+
           </div>
         </form>
       </section>

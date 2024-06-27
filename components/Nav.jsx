@@ -22,7 +22,7 @@ const Nav = () => {
   }, [])
 
   return (
-    <nav className='flex-between w-full mb-16 pt-3' id='navbars'>
+    <nav className='flex-between w-full mb-16 pt-3 pb-3' id='navbars'>
       <Link href="/" className='flex gap-2 flex-center'>
         <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={37} className='object-contain'/>
       </Link>
@@ -38,8 +38,12 @@ const Nav = () => {
 
             <button type='button' onClick={signOut} className='outline_btn'> Cerrar sesión</button>
 
+            <Link href="/">
+              <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search'/>
+            </Link>
+
             <Link href="/profile">
-              <Image src="/assets/images/profile.svg" width={37} height={37} className="rounded-full" alt='profile'/>
+              <Image src="/assets/images/profile.png" width={37} height={37}  alt='profile'/>
             </Link>
           </div>
         ): (
@@ -70,21 +74,21 @@ const Nav = () => {
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
 
-                    Mi Perfil
+                    Perfil
                   </Link>
 
                   <Link href="/crear_post"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
 
-                    Nuevo
+                    Nuevo Producto
                   </Link>
 
                   <button type='button' className="mt-5 w-full black_btn" onClick={() => {
                   setdropdown(false);
                     signOut;
                   }}>
-                      Sign Out
+                      Cerrar Sesión
                   </button>
                 </div>
               )}
