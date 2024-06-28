@@ -4,11 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
-*/
 
-
+.boton{
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  height: 10rem;
+  width: 10rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  box-shadow: 0px 0px 20px #01A1FD;
+}
 #navbars{
   background-color: #01A1FD;
   position: fixed;
@@ -99,7 +106,7 @@
 }
 
 .head_text {
-  @apply mt-5 text-5xl font-inter leading-[1.15] text-white sm:text-6xl;
+  @apply mt-8 text-2xl font-inter leading-[1.15] text-white sm:text-3xl;
 }
 
 .orange_gradient {
@@ -115,11 +122,11 @@
 }
 
 .desc {
-  @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
+  @apply mt-5 text-lg text-white sm:text-xl max-w-2xl;
 }
 
 .search_input {
-  @apply block w-full rounded-full border border-gray-200 bg-white py-2.5 font-inter pl-5 text-lg focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-full border border-gray-200 bg-white py-2.5 font-inter pl-5 text-lg;
 }
 
 .searchbar{
@@ -136,6 +143,11 @@
 
 .prompt_layout {
   @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
+}
+
+/* Categories component*/
+.categories{
+  @apply mt-24 w-full gap-2 flex flex-row space-x-24 text-center mx-auto justify-center;
 }
 
 /* Feed Component */
