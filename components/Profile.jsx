@@ -1,4 +1,5 @@
 import PromptCard from "./PromptCard"
+import { signOut } from "next-auth/react"
 
 const Profile = ({name, desc, data, handleEdit, handleDelete}) => {
   return (
@@ -7,6 +8,7 @@ const Profile = ({name, desc, data, handleEdit, handleDelete}) => {
         <span>{name} Profile </span>
       </h1>
       <p className="desc text-left">{desc}</p>
+      <button type='button' onClick={signOut} className='outline_btn'> Cerrar sesión</button>
     </section>
   )
 }

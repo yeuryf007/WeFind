@@ -14,7 +14,7 @@ const Feed = () => {
     <section className="feed">
       <form className="relative w-full flex-center search_input">
 
-        <Link href="/" className='flex gap-2 flex-center'>
+        <Link href="/categorias" className='flex gap-2 flex-center'>
           <Image src="/assets/images/search.svg" width={42} height={42} alt='search'/>
         </Link>
 

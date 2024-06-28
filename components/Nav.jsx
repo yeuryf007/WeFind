@@ -26,17 +26,27 @@ const Nav = () => {
       <Link href="/" className='flex gap-2 flex-center'>
         <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={37} className='object-contain'/>
       </Link>
-
+      
       {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden'>
+      <div className='sm:flex hidden w-3/4 gap-96'>
+                {/*Rechequear estos dos de arriba y abajo pq es muy feo dejarlo asi xd*/}
+        <div className='flex gap-5 ml-60 align-baseline'>
+
+          <Link href="/categorias" className='navtext'>
+            Categorias
+          </Link>
+          
+          <Link href="/crear_post" className='navtext'>
+            Acciones
+          </Link>
+
+          
+        </div>
+        
+
         {usuariologeado ? (
           <div className='flex gap-3 md:gap-5'>
-            <Link href="/crear_post" className='black_btn'>
-              Nuevo Producto
-            </Link>
-
-            <button type='button' onClick={signOut} className='outline_btn'> Cerrar sesión</button>
 
             <Link href="/">
               <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search'/>
