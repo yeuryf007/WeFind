@@ -31,7 +31,7 @@ const Nav = () => {
 
       <div className='sm:flex hidden w-3/4 gap-96'>
                 {/*Rechequear estos dos de arriba y abajo pq es muy feo dejarlo asi xd*/}
-        <div className='flex gap-5 ml-60 align-baseline'>
+        <div className='flex gap-5 ml-64 mr-28 align-center'>
 
           <Link href="/categorias" className='navtext'>
             Categorias
