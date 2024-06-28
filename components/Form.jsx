@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
   return(
-    <section className="w-full max-w-full flex-center flex-col mt-24">
+    <section className="w-full max-w-full flex-col mt-24">
 
       <h1 className='head_text text-left'>
         <span className='head_text'>{type} productos</span>
