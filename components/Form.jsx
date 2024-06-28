@@ -10,15 +10,20 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
         <span className='head_text'>{type} productos</span>
         </h1>
 
-        <p className='desc text-left max-w-md'>
+        <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
+          <div className='flex flex-row'>
+            <Image src="/assets/images/placeholder.png" width={500} height={3000} className="object-contain border-2"/>
+            <div className="flex flex-col ml-8">
+            <select placeholder="Seleccione la sucursal" required
+                className='form_textarea_sm w-full'></select>
+                <p className='desc text-left max-w-md'>
             WeFind es una herramienta de busqueda de productos para que los clientes puedan descubrir productos cerca de ellos
             y subir productos propios para que otros puedan encontrar.
         
         </p>
-
-        <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
-
-          <div className='flex flex-row'>
+            </div>
+          </div>
+          <div className='flex flex-row mt-4'>
 
           
             <div className='file-select-img'>
@@ -32,7 +37,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
             <div className='w-full'>
 
               <label>
-                <span className='font-inter font-semibold text-base text-gray-700'> Nombre del Producto</span>
+                <span className='font-inter font-semibold text-base text-gray-700'> Descripciones del producto</span>
 
                 <textarea
                 value={post.prompt}
@@ -41,29 +46,38 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
                 required
                 className='form_textarea'/>
               </label>
-
-              <label>
-                <span className='font-inter font-semibold text-base text-gray-700'>Precio del Producto</span>
+              <div className='flex flex-row pt-2'>
+                <label>
 
                 <textarea
                 //value={post.prompt}
                 //onChange={(e)=> setpost({...post, prompt: e.target.value})}
-                placeholder='Escriba el precio'
+                placeholder='Escriba el precio del producto'
                 required
                 className='form_textarea_sm'/>
               </label>
+              <label>
+                <select placeholder="Categoría" required
+                className='form_textarea_sm ml-4'>
+                  <option value="food">Comidas</option>
+                  <option value="home">Hogar</option>
+                  <option value="sport">Deportes</option>
+                  <option value="health">Salud</option>
+                </select>
+              </label>
+              </div>
+              
 
               
             </div>
 
           </div>
           <label>
-            <span className='font-inter font-semibold text-base text-gray-700'> Descripción del Producto</span>
 
             <textarea
             //value={post.prompt}
             //onChange={(e)=> setpost({...post, prompt: e.target.value})}
-            placeholder='Describa el producto'
+            placeholder='Descripción general del producto'
             required
             className='form_textarea_desc'/>
           </label>

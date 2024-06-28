@@ -153,7 +153,7 @@
 }
 
 .desc {
-  @apply mt-5 text-lg text-white sm:text-xl max-w-2xl;
+  @apply mt-5 text-sm text-white sm:text-xl max-w-2xl;
 }
 
 .search_input {
@@ -194,7 +194,7 @@
   @apply flex rounded-lg h-[50px] w-[250px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 .form_textarea_desc {
-  @apply w-full flex rounded-lg h-[1000px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
 .form_input {

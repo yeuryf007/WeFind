@@ -1,4 +1,3 @@
-import Categories from '@components/Categories'
 import Feed from '@components/Feed'
 import Link from 'next/link'
 
