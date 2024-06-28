@@ -1,5 +1,6 @@
 import Categories from '@components/Categories'
 import Feed from '@components/Feed'
+import Link from 'next/link'
 
 const Home = () => {
   return (
@@ -11,9 +12,26 @@ const Home = () => {
         
 
         <Feed/>
-        <Categories/>
+        <div className="categories">
+          <Boton titulo="Comidas" imagen='/assets/images/comidas.svg'/>
+          <Boton titulo="Hogar" imagen='/assets/images/hogar.svg'/>
+          <Boton titulo="Deporte" imagen='/assets/images/deporte.svg'/>
+          <Boton titulo="Salud" imagen='/assets/images/salud.svg'/>
+        </div>
+        
     </section>
   )
+}
+
+function Boton ({imagen, titulo}){
+  return(
+    <Link href={`/${titulo}`}>
+      <div  className='boton'>
+        <img src={imagen}/>
+      </div>
+      <h4 className='desc'>{titulo}</h4>
+    </Link>
+  );
 }
 
 export default Home
