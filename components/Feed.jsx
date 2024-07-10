@@ -21,10 +21,10 @@ const Feed = () => {
         <input
         type="text"
         placeholder="Escribe lo que quieras buscar"
-        value={searchText}
-        onChange={handleSearchChange}
         required
-        className="searchbar peer w-full"/>
+        href="/categorias"
+        className="searchbar peer w-full"
+        id="searchinput"/>
       </form>
     </section>
   )
