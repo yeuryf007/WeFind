@@ -83,7 +83,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           </label>
 
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href="/" className='text-sm dropdown_link'> Cancel</Link>
+            <Link href="/" className='text-sm dropdown_link'> Cancelar</Link>
 
             <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
               {submitting ? `${type}...` : type }
