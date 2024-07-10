@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Categories component*/
+.categories{
+  @apply w-full gap-16 flex flex-wrap  text-center mx-auto justify-center;
+}
 
 .boton{
   background-color: white;
@@ -153,7 +157,7 @@
 }
 
 .desc {
-  @apply mt-5 text-sm text-white sm:text-xl max-w-2xl;
+  @apply mt-5 text-sm text-white sm:text-xl max-w-2xl mb-3;
 }
 
 .search_input {
@@ -176,14 +180,9 @@
   @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
 }
 
-/* Categories component*/
-.categories{
-  @apply mt-24 w-full gap-2 flex flex-row space-x-24 text-center mx-auto justify-center;
-}
-
 /* Feed Component */
 .feed {
-  @apply mt-16 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2;
+  @apply mt-16 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2 mb-24;
 }
 
 /* Form Component */
