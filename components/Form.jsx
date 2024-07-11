@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Mapjsx from './Map.js';
 
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
@@ -12,7 +13,10 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
 
         <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
           <div className='flex flex-row'>
-            <Image src="/assets/images/placeholder.png" width={500} height={3000} className="object-contain border-2"/>
+            <div className='flex flex-col'
+            width={'500px'} height={'3000px'} color='white'>
+                <Mapjsx/>
+            </div>
             <div className="flex flex-col ml-8">
             <select placeholder="Seleccione la sucursal" required
                 className='form_textarea_sm w-full'></select>
