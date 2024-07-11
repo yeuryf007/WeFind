@@ -58,13 +58,19 @@ const Nav = () => {
           </div>
         ): (
           <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                  Ingresar
-                </button>
-              ))
-            }
+          <Link href="/login">
+            <button type='button' className='black_btn'>
+              Ingresar
+            </button>
+          </Link>
+              
+              {/*{providers &&
+                Object.values(providers).map((provider) => (
+                  <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
+                    Ingresar
+                  </button>
+                ))
+              }*/}
           </>
         )
       }
@@ -75,15 +81,14 @@ const Nav = () => {
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
             <div className='flex'>
-              <Image src="/assets/images/profile.svg" width={37} height={37} className="rounded-full" alt='profile'
+              <Image src="/assets/images/profile.png" width={37} height={37} className="rounded-full" alt='profile'
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
                 <div className='dropdown'>
-                  <Link href="/profile"
+                  <Link href="/categorias"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
-
                     Categorias
                   </Link>
 
