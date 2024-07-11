@@ -19,26 +19,24 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
             </div>
             <div className="flex flex-col ml-8">
             <select placeholder="Seleccione la sucursal" required
-                className='form_textarea_sm w-full'></select>
+              className='form_textarea_sm w-full'></select>
                 <p className='desc text-left max-w-md'>
-            WeFind es una herramienta de busqueda de productos para que los clientes puedan descubrir productos cerca de ellos
-            y subir productos propios para que otros puedan encontrar.
-        
-        </p>
+                  WeFind es una herramienta de busqueda de productos para que los clientes puedan descubrir productos cerca de ellos
+                  y subir productos propios para que otros puedan encontrar.
+              
+                </p>
             </div>
           </div>
-          <div className='flex flex-row mt-4'>
-
-          
+          <div className='flex flex-wrap mt-4 w-full'>
             <div className='file-select-img'>
-            <Link href="/" className='flex gap-2 flex-center mt-8 mb-4'>
-              <Image src="/assets/images/add-image.svg" alt="Añadir imagen" width={70} height={30} className='object-contain'/>
-            </Link>
-              <input type='file' className='src-file'/>
-              Subir imagen
+              <Link href="/" className='flex flex-center mt-8 mb-4'>
+                <Image src="/assets/images/add-image.svg" alt="Añadir imagen" width={70} height={30} className='object-contain'/>
+              </Link>
+                <input type='file' className='src-file'/>
+                Subir imagen
             </div>
 
-            <div className='w-full'>
+            <div className='pl-3 w-full lg:w-1/2'>
 
               <label>
                 <span className='font-inter font-semibold text-base text-gray-700'> Descripciones del producto</span>
@@ -50,7 +48,8 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
                 required
                 className='form_textarea'/>
               </label>
-              <div className='flex flex-row pt-2'>
+
+              <div className='flex flex-row pt-2 w-full'>
                 <label>
 
                 <textarea
@@ -59,21 +58,21 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
                 placeholder='Escriba el precio del producto'
                 required
                 className='form_textarea_sm'/>
-              </label>
-              <label>
-                <select placeholder="Categoría" required
-                className='form_textarea_sm ml-4'>
-                  <option value="food">Comidas</option>
-                  <option value="home">Hogar</option>
-                  <option value="sport">Deportes</option>
-                  <option value="health">Salud</option>
-                </select>
-              </label>
+                </label>
+
+                <label>
+                  <select placeholder="Categoría" required className='form_textarea_sm ml-4 '>
+                    <option value="food">Comidas</option>
+                    <option value="home">Hogar</option>
+                    <option value="sport">Deportes</option>
+                    <option value="health">Salud</option>
+                  </select>
+                </label>
               </div>
               
 
               
-            </div>
+              </div>
 
           </div>
           <label>
@@ -87,7 +86,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           </label>
 
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href="/" className='text-sm dropdown_link'> Cancel</Link>
+            <Link href="/" className='text-sm dropdown_link'> Cancelar</Link>
 
             <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
               {submitting ? `${type}...` : type }

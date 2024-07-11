@@ -1,5 +1,5 @@
-import Feed from '@components/Feed'
-import Link from 'next/link'
+import Feed from '@components/Feed';
+import Link from 'next/link';
 
 const Home = () => {
   return (
@@ -17,7 +17,6 @@ const Home = () => {
           <Boton titulo="Deporte" imagen='/assets/images/deporte.svg'/>
           <Boton titulo="Salud" imagen='/assets/images/salud.svg'/>
         </div>
-        
     </section>
   )
 }
