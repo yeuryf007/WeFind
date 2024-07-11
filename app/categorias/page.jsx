@@ -4,8 +4,13 @@ const Categorias = () => {
   return (
     <div className="w-full flex-col mt-24">
       <h1 className='head_text text-left'>Categorias</h1>
+      <div className="flex flex-wrap gap-4 items-center">
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+      </div>
       
-      <Card/>
     </div>
 
   )
