@@ -190,7 +190,7 @@
   @apply w-3/4 flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 .form_textarea_sm {
-  @apply flex rounded-lg h-[50px] w-[250px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply flex rounded-lg h-[50px] w-full mt-2 p-3 text-sm text-gray-500 outline-0 lg:w-[250px];
 }
 .form_textarea_desc {
   @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
@@ -201,7 +201,7 @@
 }
 
 .file-select-img{
-  @apply w-1/2 h-52 flex-col pr-5 border-2 mr-4 relative inline-block rounded-lg;
+  @apply w-full lg:w-1/2 h-52 flex-col border-2 relative inline-block rounded-lg;
   background-color: white;
   color: #BABABA;
   cursor: pointer;
