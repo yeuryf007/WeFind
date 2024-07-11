@@ -15,7 +15,6 @@ const layoutRaiz = ({children}) => {
 
 
           <div className='main'>
-              <div className='gradient'/>
           </div>
 
           <main className='app'>
