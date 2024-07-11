@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Home = () => {
   return (
-    <section className="w-full flex-center flex-col mt-24">
+    <section className="w-full flex-center flex-col mt-12">
         <h1 className="head_text text-center">
             Encuentra tu próximo artículo favorito
             <br className="max-md:hidden"/>
