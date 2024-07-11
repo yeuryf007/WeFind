@@ -22,16 +22,16 @@ const Nav = () => {
   }, [])
 
   return (
-    <nav className='flex-between w-full pt-3 pb-3' id='navbars'>
+    <nav className='flex  justify-between w-full pt-3 pb-3' id='navbars'>
       <Link href="/" className='flex gap-2 flex-center'>
         <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={37} className='object-contain'/>
       </Link>
       
       {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden w-3/4 gap-96'>
-                {/*Rechequear estos dos de arriba y abajo pq es muy feo dejarlo asi xd*/}
-        <div className='flex gap-5 ml-64 mr-28 align-center'>
+      <div className='sm:flex hidden w-7/12 justify-between'>
+                
+        <div className='flex gap-5 align-center'>
 
           <Link href="/categorias" className='navtext'>
             Categorias
@@ -58,13 +58,19 @@ const Nav = () => {
           </div>
         ): (
           <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                  Ingresar
-                </button>
-              ))
-            }
+          <Link href="/login">
+            <button type='button' className='black_btn'>
+              Ingresar
+            </button>
+          </Link>
+              
+              {/*{providers &&
+                Object.values(providers).map((provider) => (
+                  <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
+                    Ingresar
+                  </button>
+                ))
+              }*/}
           </>
         )
       }
@@ -75,23 +81,22 @@ const Nav = () => {
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
             <div className='flex'>
-              <Image src="/assets/images/profile.svg" width={37} height={37} className="rounded-full" alt='profile'
+              <Image src="/assets/images/profile.png" width={37} height={37} className="rounded-full" alt='profile'
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
                 <div className='dropdown'>
-                  <Link href="/profile"
+                  <Link href="/categorias"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
-
-                    Perfil
+                    Categorias
                   </Link>
 
                   <Link href="/crear_post"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
 
-                    Nuevo Producto
+                    Acciones
                   </Link>
 
                   <button type='button' className="mt-5 w-full black_btn" onClick={() => {
