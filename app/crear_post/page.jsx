@@ -19,14 +19,15 @@ const CrearPost = () => {
   }
   
   return (
-    <Form 
-    type="Añadir"
-    post={post}
-    setpost = {setpost}
-    submitting = {submitting} 
-    handleSubmit = {crearpost}
-
-    />
+    <div style={{backgroundColor: 'white'}}>
+      <Form 
+          type="Añadir"
+          post={post}
+          setpost={setpost}
+          submitting={submitting} 
+          handleSubmit={crearpost}
+      />
+    </div>
   )
 }
 

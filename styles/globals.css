@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  box-shadow: 0px 0px 20px #01A1FD;
+  box-shadow: 0px 4px 11.3px #01A1FD;
   -webkit-transition: ease-out 0.4s;
   -moz-transition: ease-out 0.4s;
   transition: ease-out 0.4s;
@@ -29,17 +29,20 @@
 }
 
 #navbars{
-  background-color: #01A1FD;
-  position: fixed;
+  background-color: #0098FD;
+  position: sticky;
   top: 0;
   padding-left: 4rem;
   padding-right: 4rem;
   z-index: 2;
+  height: 90px;
+  width: 100%;
 }
 
 .otherpages{
   background-color: white;
 }
+
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -47,12 +50,12 @@
   display: flex;
   justify-content: center;
   padding: 120px 24px 160px 24px;
-  background-color: #01A1FD;
+  background-color: #0098FD;
   pointer-events: none;
 }
 
 .main:before {
-  background: linear-gradient(#01A1FD, #01A1FD 25%, #6FE3ED 100%);
+  background: linear-gradient(180deg, #0098FD 15%, #01FEFF 110%);
   position: absolute;
   content: "";
   z-index: 2;
@@ -70,31 +73,6 @@
   top: 0;
   opacity: 0.4;
   filter: invert(1);
-}
-
-.gradient {
-  height: fit-content;
-  z-index: 3;
-  width: 100%;
-  max-width: 640px;
-  background-image: radial-gradient(
-      at 27% 37%,
-      hsla(215, 98%, 61%, 1) 0px,
-      transparent 0%
-    ),
-    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
-    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
-    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
-    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
-    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  filter: blur(100px) saturate(150%);
-  top: 80px;
-  opacity: 0.15;
 }
 
 .navtext{
@@ -129,7 +107,7 @@
 /* Tailwind Styles */
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  @apply relative flex justify-center items-center flex-col mx-auto ;
 }
 
 .black_btn {
@@ -212,7 +190,7 @@
   text-align: center;
 }
 
- .src-file{
+.src-file{
   cursor: pointer;
   font-size: 10000px;
   margin: 0;
