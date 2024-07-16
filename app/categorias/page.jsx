@@ -85,18 +85,10 @@ const Categorias = () => {
   return (
     <div className="w-full flex-col mt-24">
       <h1 className='head_text text-left'>Categorias</h1>
-<<<<<<< HEAD
-      <div className="flex flex-wrap gap-4 items-center justify-between">
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-=======
       <div className="flex flex-wrap gap-4 items-center">
         {products.map((product) => (
           <Card key={product.id} product={product} distance={product.distance} />
         ))}
->>>>>>> 4b6be6ec617ea5288efa4903e2ae80228cecb055
       </div>
     </div>
   );

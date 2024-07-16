@@ -34,12 +34,8 @@ import {
     // call getCurrentLocation to get the current location
     getCurrentLocation();
   
-<<<<<<< HEAD
-    const center = { lat: 'YOUR-LATITUDE', lng: 'YOUR-LONGITUDE' };
-=======
     // static lat and lng
     const center = { lat: 18.4649639, lng: -69.9479573 };
->>>>>>> 4b6be6ec617ea5288efa4903e2ae80228cecb055
   
     return (
       <div
