@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@app/firebase/config'; // Adjust this import path as needed
 
-const Detalles = () => {
+const ProductDetails = ({ initialProduct }) => {
   const searchParams = useSearchParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState(initialProduct);
+  const [loading, setLoading] = useState(!initialProduct);
 
   useEffect(() => {
     const fetchProduct = async (id) => {
@@ -20,11 +20,9 @@ const Detalles = () => {
           setProduct({ id: docSnap.id, ...docSnap.data() });
         } else {
           console.log('No such document!');
-          // Handle case when product is not found
         }
       } catch (error) {
         console.error('Error fetching product:', error);
-        // Handle error (e.g., show error message)
       } finally {
         setLoading(false);
       }
@@ -36,13 +34,12 @@ const Detalles = () => {
     if (productData) {
       setProduct(productData);
       setLoading(false);
-    } else if (productId) {
+    } else if (productId && !initialProduct) {
       fetchProduct(productId);
     } else {
       setLoading(false);
-      // Handle case when no id is provided
     }
-  }, [searchParams]);
+  }, [searchParams, initialProduct]);
 
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
@@ -88,8 +85,16 @@ const Detalles = () => {
           alt="Placeholder"
         />
       </div>
-    </div>
-  )
-}
+      </div>
+  );
+};
+
+const Detalles = ({ searchParams }) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductDetails initialProduct={null} />
+    </Suspense>
+  );
+};
 
 export default Detalles;
