@@ -5,19 +5,18 @@ import Mapjsx from './Map.js';
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
   return(
-    <section className="w-full max-w-full flex-col mt-24">
+    <section className="w-full max-w-full flex-col mt-16 px-6">
 
       <h1 className='head_text text-left'>
         <span className='head_text'>{type} productos</span>
         </h1>
 
-        <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 glassmorphism'>
-          <div className='flex flex-row'>
-            <div className='flex flex-col'
-            width={'500px'} height={'3000px'} color='white'>
+        <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 border-t-2'>
+          <div className='flex flex-wrap border-b-2'>
+            <div className='flex flex-col w-full lg:w-1/2' color='white'>
                 <Mapjsx/>
             </div>
-            <div className="flex flex-col ml-8">
+            <div className="flex flex-col w-full lg:w-1/2">
             <select placeholder="Seleccione la sucursal" required
               className='form_textarea_sm w-full'></select>
                 <p className='desc text-left max-w-md'>

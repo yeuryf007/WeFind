@@ -24,12 +24,12 @@ const Nav = () => {
   return (
     <nav className='flex justify-between w-full pt-3 pb-3' id='navbars'>
       <Link href="/" className='flex gap-2 flex-center'>
-        <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={37} className='object-contain'/>
+        <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={70} className='object-contain'/>
       </Link>
       
       {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden w-7/12 justify-between'>
+      <div className='sm:flex hidden w-7/12 justify-between items-center pl-4'>
                 
         <div className='flex gap-5 align-center'>
 
@@ -81,7 +81,7 @@ const Nav = () => {
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
             <div className='flex'>
-              <Image src="/assets/images/profile.png" width={37} height={37} className="rounded-full" alt='profile'
+              <Image src="/assets/images/profile.png" width={65} height={37} className="rounded-full" alt='profile'
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
