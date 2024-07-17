@@ -32,8 +32,8 @@
   background-color: #0098FD;
   position: sticky;
   top: 0;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   z-index: 2;
   height: 90px;
   width: 100%;
@@ -208,11 +208,19 @@
 }
 
 .dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  @apply absolute right-0 top-full mt-3 w-full rounded-lg bg-white min-w-[210px] flex flex-col justify-end items-center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown_link {
-  @apply text-sm font-inter text-gray-700 hover:underline font-medium;
+  @apply w-full text-sm font-inter text-gray-700 hover:bg-slate-200 hover:underline hover:rounded-lg font-medium py-5 text-center;
+}
+
+.nested-dropdown-content {
+  top: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 2;
 }
 
 .transition-all {

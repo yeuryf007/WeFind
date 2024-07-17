@@ -12,6 +12,7 @@ const Nav = () => {
   const {providers, getProviders} = useState(null);
   const [dropdown, setdropdown] = useState(false);
   const [visiblesearch, setvisiblesearch] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   useEffect(() => {
     const setProviders = async () => {
@@ -156,12 +157,38 @@ const Nav = () => {
                   
                 ))
               }*/}
+              
               <Image src="/assets/images/profile.png" width={65} height={37} className="rounded-full" alt='profile'
               onClick={() => setdropdown ((prev) => !prev)}/>
                 {dropdown && (
+                  
                   <div className='dropdown'>
-                    <Login/>
-                  </div>
+                    <Link href="/categorias"
+                    className='dropdown_link'
+                    onClick={() => setdropdown(false)}>
+                      Categorias
+                    </Link>
+
+                    <Link href="/crear_post"
+                    className='dropdown_link'
+                    onClick={() => setdropdown(false)}>
+
+                      Acciones
+                    </Link>
+                    
+                    <button 
+                      className='dropdown_link'
+                      onClick={() => setIsLoginOpen((prev) => !prev)}
+                    >
+                      Login
+                    </button>
+                    {isLoginOpen && (
+                      <div className="nested-dropdown-content">
+                        <Login />
+                      </div>
+                      )}
+                      </div>
+                  
                 )}
             </>
           )}
