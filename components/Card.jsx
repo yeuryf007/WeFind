@@ -6,7 +6,6 @@ import Image from 'next/image';
 const Card = ({ product, distance }) => {
   const handleClick = (e) => {
     e.preventDefault();
-    // Use window.history to store the product data
     window.history.pushState({ productData: product }, '', `/detalles?id=${product.id}`);
     window.location.href = `/detalles?id=${product.id}`;
   };
