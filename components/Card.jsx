@@ -1,10 +1,19 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Card = ({ product, distance }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    // Use window.history to store the product data
+    window.history.pushState({ productData: product }, '', `/detalles?id=${product.id}`);
+    window.location.href = `/detalles?id=${product.id}`;
+  };
+
   return (
-    <Link href={`/product/${product.id}`}>
-      <div className="bg-white rounded-lg w-80 h-48 flex flex-row mt-2 p-4">
+    <Link href={`/detalles?id=${product.id}`} onClick={handleClick}>
+      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-row mt-2 p-4">
         <Image
           src={product.Image}
           width={120}
