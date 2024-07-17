@@ -7,7 +7,7 @@ import {
   const Map = () => {
   
     const { isLoaded } = useLoadScript({
-      googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY,
+      googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
     });
   
     if (!isLoaded) return <div>Loading....</div>;
@@ -49,7 +49,7 @@ import {
       >
   
         {/* map component  */}
-        <useLoadScript googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY}>
+        <useLoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}>
             <GoogleMap
               zoom={12}
               center={getCurrentLocation()|| center}
