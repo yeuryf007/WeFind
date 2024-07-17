@@ -119,8 +119,8 @@ const Nav = () => {
 
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
-            <div className='flex'>
-              <Image src="/assets/images/profile.png" width={65} height={37} className="rounded-full" alt='profile'
+            <div className='flex border-l-white border-l-2'>
+              <Image src="/assets/images/dropdown.svg" width={65} height={37} className="rounded-full"
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
@@ -138,12 +138,12 @@ const Nav = () => {
                     Acciones
                   </Link>
 
-                  <button type='button' className="mt-5 w-full black_btn" onClick={() => {
+                  <Link href="/" className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white" onClick={() => {
                   setdropdown(false);
                     signOut;
                   }}>
                       Cerrar Sesión
-                  </button>
+                  </Link>
                 </div>
               )}
             </div>
@@ -158,7 +158,7 @@ const Nav = () => {
                 ))
               }*/}
               
-              <Image src="/assets/images/profile.png" width={65} height={37} className="rounded-full" alt='profile'
+              <Image src="/assets/images/dropdown.svg" width={65} height={37}
               onClick={() => setdropdown ((prev) => !prev)}/>
                 {dropdown && (
                   
