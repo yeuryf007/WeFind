@@ -19,7 +19,6 @@ const CrearPost = () => {
   }
   
   return (
-    <div style={{backgroundColor: 'white'}}>
       <Form 
           type="Añadir"
           post={post}
@@ -27,7 +26,6 @@ const CrearPost = () => {
           submitting={submitting} 
           handleSubmit={crearpost}
       />
-    </div>
   )
 }
 
