@@ -4,12 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import Login from '@components/Login';
 
 const Nav = () => {
 
   const usuariologeado = true;
   const {providers, getProviders} = useState(null);
   const [dropdown, setdropdown] = useState(false);
+  const [visiblesearch, setvisiblesearch] = useState(false);
 
   useEffect(() => {
     const setProviders = async () => {
@@ -29,7 +31,7 @@ const Nav = () => {
       
       {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden w-7/12 justify-between items-center pl-4'>
+      <div className='sm:flex hidden w-7/12 justify-between items-center pl-6'>
                 
         <div className='flex gap-5 align-center'>
 
@@ -48,30 +50,66 @@ const Nav = () => {
         {usuariologeado ? (
           <div className='flex gap-3 md:gap-5'>
 
-            <Link href="/">
-              <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search'/>
-            </Link>
+            {visiblesearch && (
+              <input 
+                type="text" 
+                className="ml-2 p-2 rounded-full transition-all duration-300 ease-in-out"
+                placeholder="Buscar"
+                style={{
+                  width: visiblesearch ? '200px' : '0',
+                  opacity: visiblesearch ? 1 : 0,
+                }}
+              />
+            )}
+            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' onClick={() => setvisiblesearch(!visiblesearch)}
+            className="cursor-pointer"/>
+            
+            
 
             <Link href="/profile">
-              <Image src="/assets/images/profile.png" width={37} height={37}  alt='profile'/>
+              <Image src="/assets/images/profile.png" width={45} height={45}  alt='profile'/>
             </Link>
           </div>
         ): (
           <>
-          <Link href="/login">
-            <button type='button' className='black_btn'>
-              Ingresar
-            </button>
-          </Link>
+          <div className='flex gap-3 md:gap-5'>
+            
+            {visiblesearch && (
+              <input 
+                type="text" 
+                className="ml-2 p-2 rounded-full transition-all duration-300 ease-in-out"
+                placeholder="Buscar..."
+                style={{
+                  width: visiblesearch ? '200px' : '0',
+                  opacity: visiblesearch ? 1 : 0,
+                }}
+              />
+            )}
+            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' onClick={() => setvisiblesearch(!visiblesearch)}
+              className="cursor-pointer"/>
               
-              {/*{providers &&
+            
+            <div className='flex relative'>
+            <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
+                onClick={() => setdropdown ((prev) => !prev)}/>
+              {dropdown && (
+                <div className='dropdown'>
+                  <Login/>
+                </div>
+              )}
+              </div>
+          </div>
+              
+              {providers &&
                 Object.values(providers).map((provider) => (
                   <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
                     Ingresar
                   </button>
                 ))
-              }*/}
+              }
+
           </>
+          
         )
       }
       </div>
@@ -110,13 +148,21 @@ const Nav = () => {
             </div>
           ): (
             <>
-              {providers &&
+              {/*{providers &&
                 Object.values(providers).map((provider) => (
                   <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
                     Sign In
                   </button>
+                  
                 ))
-              }
+              }*/}
+              <Image src="/assets/images/profile.png" width={65} height={37} className="rounded-full" alt='profile'
+              onClick={() => setdropdown ((prev) => !prev)}/>
+                {dropdown && (
+                  <div className='dropdown'>
+                    <Login/>
+                  </div>
+                )}
             </>
           )}
         </div>
