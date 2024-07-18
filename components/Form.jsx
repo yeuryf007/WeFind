@@ -13,7 +13,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
 
         <form onSubmit={handleSubmit} className='mt-10 w-full flex flex-col gap-7 border-t-2'>
           <div className='flex flex-wrap border-b-2'>
-            <div className='flex flex-col w-full lg:w-1/2' color='white'>
+            <div className='flex flex-col w-full lg:w-1/2 flex-grow' color='white'>
                 <Mapjsx/>
             </div>
             <div className="flex flex-col w-full lg:w-1/2">

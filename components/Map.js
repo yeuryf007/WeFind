@@ -1,26 +1,21 @@
 'use client';
+import { useState, useEffect } from 'react';
 import {
-    GoogleMap,
-    useLoadScript
-  } from "@react-google-maps/api";
-  
-  const Map = () => {
-  
-    const { isLoaded } = useLoadScript({
-      googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
-    });
-  
-    if (!isLoaded) return <div>Loading....</div>;
-
-    // get current location
+  GoogleMap,
+  useLoadScript
+} from "@react-google-maps/api";
+const Map = () => {
+  const [center, setCenter] = useState({ lat: 18.4649639, lng: -69.9479573 });
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+  });
+  useEffect(() => {
     const getCurrentLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-            const currentLocation = { lat: latitude, lng: longitude };
-            // do something with currentLocation
-            console.log("Current Location:", currentLocation);
+            setCenter({ lat: latitude, lng: longitude });
           },
           (error) => {
             console.error("Error getting current location:", error);
@@ -30,36 +25,34 @@ import {
         console.error("Geolocation is not supported by this browser.");
       }
     };
-
-    // call getCurrentLocation to get the current location
     getCurrentLocation();
-  
-    // static lat and lng
-    const center = { lat: 18.4649639, lng: -69.9479573 };
-  
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "20px",
+  }, []);
+  if (!isLoaded) return <div>Loading....</div>;
+  return (
+    <div 
+      id="map_div"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "90%",
+        height: "350px",
+        margin: "0 auto", // This centers the map horizontally
+        marginTop: "1rem",
+        marginBottom: "1rem",
+      }}
+    >
+      <GoogleMap
+        zoom={12}
+        center={center}
+        mapContainerClassName="map"
+        mapContainerStyle={{
+          width: "100%",
+          height: "100%",
         }}
       >
-  
-        {/* map component  */}
-        <useLoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}>
-            <GoogleMap
-              zoom={12}
-              center={getCurrentLocation()|| center}
-              mapContainerClassName="map"
-              mapContainerStyle={{ width: "500px", height: "400px", margin: "10px" }}
-            >
-            </GoogleMap>
-        </useLoadScript>
-      </div>
-    );
-  };
-  
-  export default Map;
+      </GoogleMap>
+    </div>
+  );
+};
+export default Map;
