@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Card from "@components/Card";
 import { collection, getDocs, GeoPoint, query, where } from "firebase/firestore";
 import { db } from "@app/firebase/config";
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from "react";
 
 const calculateDistance = (point1, point2) => {
 	const R = 6371;
@@ -20,11 +19,11 @@ const calculateDistance = (point1, point2) => {
 	return Math.round(R * c * 100) / 100; // Round to 2 decimal places
 };
 
-const Categorias = () => {
+const CategoriaContent = () => {
 	const [products, setProducts] = useState([]);
 	const [userLocation, setUserLocation] = useState(new GeoPoint(18.4861, -69.9312));
 	const [mounted, setMounted] = useState(false);
-	const [sortBy, setSortBy] = useState('distance'); // New state for sorting option
+	const [sortBy, setSortBy] = useState('distance');
 	const searchParams = useSearchParams();
   
 	useEffect(() => {
@@ -108,49 +107,55 @@ const Categorias = () => {
 			  };
 		  
 			  fetchProducts();
-			}, [mounted, searchParams, sortBy]);
-		  
-			if (!mounted) {
-			  return null; // or a loading spinner
-			}
-		  
-			const category = searchParams.get('category');
-			const search = searchParams.get('search');
-		  
-			const handleSortChange = (event) => {
-			  setSortBy(event.target.value);
-			};
-		  
-			return (
-				<Suspense fallback={<div>Loading...</div>}>
-			  <div className="w-full flex-col px-12">
-				<h1 className="head_text text-left mb-6">
-				  {category ? `Categoría: ${category}` : (search ? `Resultados para: ${search}` : 'Todos los productos')}
-				</h1>
-				<div className="mb-4">
-				  <label htmlFor="sort-select" className="mr-2 font-bold">Ordenar por:</label>
-				  <select 
-					id="sort-select"
-					value={sortBy}
-					onChange={handleSortChange}
-					className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-				  >
-					<option value="distance">Distancia</option>
-					<option value="price">Precio</option>
-				  </select>
-				</div>
-				<div className="flex flex-wrap gap-8 items-center justify-center">
-				  {products.map((product) => (
-					<Card
-					  key={product.id}
-					  product={product}
-					  distance={product.distance}
-					/>
-				  ))}
-				</div>
-			  </div>
-			  </Suspense>
-			);
-		  };
-		  
-		  export default Categorias;
+  }, [mounted, searchParams, sortBy]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const category = searchParams.get('category');
+  const search = searchParams.get('search');
+
+  const handleSortChange = (event) => {
+    setSortBy(event.target.value);
+  };
+
+  return (
+    <div className="w-full flex-col px-12">
+      <h1 className="head_text text-left mb-6">
+        {category ? `Categoría: ${category}` : (search ? `Resultados para: ${search}` : 'Todos los productos')}
+      </h1>
+      <div className="mb-4">
+        <label htmlFor="sort-select" className="mr-2 font-bold">Ordenar por:</label>
+        <select 
+          id="sort-select"
+          value={sortBy}
+          onChange={handleSortChange}
+          className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="distance">Distancia</option>
+          <option value="price">Precio</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap gap-8 items-center justify-center">
+        {products.map((product) => (
+          <Card
+            key={product.id}
+            product={product}
+            distance={product.distance}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Categorias = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoriaContent />
+    </Suspense>
+  );
+};
+
+export default Categorias;
