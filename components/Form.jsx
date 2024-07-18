@@ -1,9 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Mapjsx from './Map.js';
+import { useRouter } from 'next/navigation';
 
 const Form = ({ type, post, setpost, submitting, handleSubmit
       }) => {
+        const router = useRouter();
+        const handleCancel = (e) => {
+          e.preventDefault(); // Prevent the default link behavior
+          const confirmCancel = confirm('¿Estás seguro que deseas cancelar?');
+          if (confirmCancel) {
+            router.push('/'); // Navigate to home page if confirmed
+          }
+        };
   return(
     <section className="w-full max-w-full flex-col mt-16 px-6">
 
@@ -85,7 +94,7 @@ const Form = ({ type, post, setpost, submitting, handleSubmit
           </label>
 
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href="/" className='text-sm dropdown_link'> Cancelar</Link>
+            <Link href="/" className='text-sm hover:underline h-full' onClick={handleCancel}> Cancelar</Link>
 
             <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
               {submitting ? `${type}...` : type }
