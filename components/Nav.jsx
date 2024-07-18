@@ -51,47 +51,33 @@ const Nav = () => {
         {usuariologeado ? (
           <div className='flex gap-3 md:gap-5'>
 
-            {visiblesearch && (
-              <input 
-                type="text" 
-                className="ml-2 p-2 rounded-full transition-all duration-300 ease-in-out"
-                placeholder="Buscar"
-                style={{
-                  width: visiblesearch ? '200px' : '0',
-                  opacity: visiblesearch ? 1 : 0,
-                }}
-              />
-            )}
-            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' onClick={() => setvisiblesearch(!visiblesearch)}
-            className="cursor-pointer"/>
-            
+
+            <Link href='/' className='items-center justify-center'>
+              <Image src="/assets/images/search-w.svg" width={45} height={45} alt='search'/>
+            </Link>
             
 
-            <Link href="/profile">
-              <Image src="/assets/images/profile.png" width={45} height={45}  alt='profile'/>
-            </Link>
+            <div className='flex relative'>
+              <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
+                onClick={() => setdropdown ((prev) => !prev)}/>
+              {dropdown && (
+                <div className='dropdown'>
+                  <button type='button' onClick={signOut} className='w-full dropdown_link hover:bg-slate-800 hover:text-white'>
+                     Cerrar sesión
+                     </button>
+                </div>
+              )}
+              </div>
           </div>
         ): (
           <>
           <div className='flex gap-3 md:gap-5'>
             
-            {visiblesearch && (
-              <input 
-                type="text" 
-                className="ml-2 p-2 rounded-full transition-all duration-300 ease-in-out"
-                placeholder="Buscar..."
-                style={{
-                  width: visiblesearch ? '200px' : '0',
-                  opacity: visiblesearch ? 1 : 0,
-                }}
-              />
-            )}
-            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' onClick={() => setvisiblesearch(!visiblesearch)}
-              className="cursor-pointer"/>
+            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' href="/"/>
               
             
             <div className='flex relative'>
-            <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
+              <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
                 onClick={() => setdropdown ((prev) => !prev)}/>
               {dropdown && (
                 <div className='dropdown'>
