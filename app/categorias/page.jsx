@@ -4,6 +4,7 @@ import Card from "@components/Card";
 import { collection, getDocs, GeoPoint, query, where } from "firebase/firestore";
 import { db } from "@app/firebase/config";
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from "react";
 
 const calculateDistance = (point1, point2) => {
 	const R = 6371;
@@ -121,6 +122,7 @@ const Categorias = () => {
 			};
 		  
 			return (
+				<Suspense fallback={<div>Loading...</div>}>
 			  <div className="w-full flex-col px-12">
 				<h1 className="head_text text-left mb-6">
 				  {category ? `Categoría: ${category}` : (search ? `Resultados para: ${search}` : 'Todos los productos')}
@@ -147,6 +149,7 @@ const Categorias = () => {
 				  ))}
 				</div>
 			  </div>
+			  </Suspense>
 			);
 		  };
 		  
