@@ -1,5 +1,9 @@
-import Feed from '@components/Feed';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
+
+const DynamicFeed = dynamic(() => import('@components/Feed'), {
+  ssr: false,
+});
 
 const Home = () => {
   return (
@@ -9,10 +13,9 @@ const Home = () => {
             <br className="max-md:hidden"/>
         </h1>
         
-
-        <Feed/>
+        <DynamicFeed />
         <div className="categories">
-          <Boton titulo="Comidas" imagen='/assets/images/comidas.svg'/>
+          <Boton titulo="Comestibles" imagen='/assets/images/comestibles.svg'/>
           <Boton titulo="Hogar" imagen='/assets/images/hogar.svg'/>
           <Boton titulo="Deporte" imagen='/assets/images/deporte.svg'/>
           <Boton titulo="Salud" imagen='/assets/images/salud.svg'/>
@@ -23,7 +26,7 @@ const Home = () => {
 
 function Boton ({imagen, titulo}){
   return(
-    <Link href={`/${titulo}`}>
+    <Link href={`/categorias?category=${encodeURIComponent(titulo)}`}>
       <div  className='boton'>
         <img src={imagen}/>
       </div>
@@ -32,4 +35,4 @@ function Boton ({imagen, titulo}){
   );
 }
 
-export default Home
+export default Home;
