@@ -12,7 +12,7 @@ const Card = ({ product, distance }) => {
 
   return (
     <Link href={`/detalles?id=${product.id}`} onClick={handleClick}>
-      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-row mt-2 p-4">
+      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-row p-4">
         <Image
           src={product.Image}
           width={120}
