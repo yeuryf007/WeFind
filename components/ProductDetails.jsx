@@ -6,11 +6,13 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@app/firebase/config'; // Adjust this import path as needed
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 
+const DEFAULT_LOCATION = { lat: 18.4649639, lng: -69.9479573 };
+
 const ProductDetails = ({ productId }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [directions, setDirections] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState(DEFAULT_LOCATION);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const ProductDetails = ({ productId }) => {
         },
         (error) => {
           console.error("Error getting user location:", error);
+          // Keep the default location if there's an error
         }
       );
     }
@@ -85,14 +88,12 @@ const ProductDetails = ({ productId }) => {
       const destination = `${product.Location.latitude},${product.Location.longitude}`;
       let url = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
       
-      if (userLocation) {
-        const origin = `${userLocation.lat},${userLocation.lng}`;
-        url += `&origin=${origin}`;
-      }
+      const origin = `${userLocation.lat},${userLocation.lng}`;
+      url += `&origin=${origin}`;
 
       window.open(url, '_blank');
     }
-    };
+  };
 
   if (loading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
@@ -123,11 +124,12 @@ const ProductDetails = ({ productId }) => {
             <li>Teléfono: {product.Phone || 'N/A'}</li>
             <li>Delivery: {product.Delivery || 'N/A'}</li>
           </ul>
-          <p className='text-left max-w-md text-red-500'>* Al hacer click en el mapa sera redirigido a google maps.</p>
+          <p className='text-left max-w-md text-red-500'>* Si no permite que el navegador utilice su ubicación, se usará una dirección inicial predeterminada.</p>
+          <p className='text-left max-w-md text-red-500'>* Al hacer click en el mapa será redirigido a Google Maps.</p>
         </div>
         
         {mapLoaded ? (
-          <div style={{ width: '700px', height: '400px' }} className="lg:ml-36" onClick={handleMapClick}>
+          <div style={{ width: '700px', height: '400px', cursor: 'pointer' }} className="lg:ml-36" onClick={handleMapClick}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={product.Location ? { lat: product.Location.latitude, lng: product.Location.longitude } : { lat: 0, lng: 0 }}
