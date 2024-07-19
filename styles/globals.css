@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Categories component*/
+.categories{
+  @apply w-full gap-16 flex flex-wrap  text-center mx-auto justify-center;
+}
+
+.boton{
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  height: 10rem;
+  width: 10rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  box-shadow: 0px 4px 11.3px #01A1FD;
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+}
+
+.boton:hover{
+  box-shadow: inset 0 0 0 100px #01a1fd28;
+}
+
+#navbars{
+  background-color: #0098FD;
+  position: sticky;
+  top: 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  z-index: 2;
+  height: 90px;
+  width: 100%;
+}
+
+.otherpages{
+  background-color: white;
+}
+
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 120px 24px 160px 24px;
+  background-color: #0098FD;
+  pointer-events: none;
+}
+
+.main:before {
+  background: linear-gradient(180deg, #0098FD 15%, #01FEFF 110%);
+  position: absolute;
+  content: "";
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.main:after {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.4;
+  filter: invert(1);
+}
+
+.navtext{
+  position: relative;
+  color: white;
+}
+
+.navtext::before{
+  content:"";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+  z-index: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease-in-out;
+}
+
+.navtext:hover::before {
+  transform: scaleX(1);
+}
+
+@media screen and (max-width: 640px) {
+  .main {
+    padding: 0;
+  }
+}
+
+/* Tailwind Styles */
+
+.app {
+  @apply relative flex justify-center items-center flex-col mx-auto ;
+}
+
+.black_btn {
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+}
+
+.outline_btn {
+  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+}
+
+.head_text {
+  @apply mt-8 text-2xl font-inter leading-[1.15] text-black sm:text-3xl font-bold;
+}
+
+.orange_gradient {
+  @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+}
+
+.green_gradient {
+  @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
+}
+
+.blue_gradient {
+  @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
+}
+
+.desc {
+  @apply mt-5 text-sm text-gray-600 sm:text-xl max-w-2xl mb-3;
+}
+
+.search_input {
+  @apply block w-full rounded-full border border-gray-200 bg-white py-2.5 font-inter pl-5 text-lg;
+}
+
+.searchbar{
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden rounded-full h-12;
+}
+
+.copy_btn {
+  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+}
+
+.glassmorphism {
+  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+}
+
+.prompt_layout {
+  @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
+}
+
+/* Feed Component */
+.feed {
+  @apply mt-16 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2 mb-24;
+}
+
+/* Form Component */
+.form_textarea {
+  @apply w-full flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
+}
+.form_textarea_sm {
+  @apply flex rounded-lg h-[50px] w-full mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
+}
+.form_textarea_desc {
+  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
+}
+
+.form_input {
+  @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+}
+
+.file-select-img{
+  @apply w-9/12  h-52 flex-1 border-2 relative inline-block rounded-lg;
+  background-color: white;
+  color: #BABABA;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
+}
+
+.src-file{
+  cursor: pointer;
+  font-size: 10000px;
+  margin: 0;
+  opacity: 0;
+  outline: 0 none;
+  padding: 0;
+  position: absolute;
+  right: -1000px;
+  top: -1000px;
+}
+
+/* Nav Component */
+.logo_text {
+  @apply max-sm:hidden font-inter font-semibold text-lg text-black tracking-wide;
+}
+
+.dropdown {
+  @apply absolute right-0 top-full mt-3 w-full rounded-lg bg-white min-w-[210px] flex flex-col justify-end items-center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown_link {
+  @apply w-full text-sm font-inter text-gray-700 hover:bg-slate-200 hover:underline hover:rounded-lg font-medium py-5 text-center;
+}
+
+.nested-dropdown-content {
+  top: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 2;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+/* PromptCard Component */
+.prompt_card {
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.flex-start {
+  @apply flex justify-start items-start;
+}
+
+.flex-end {
+  @apply flex justify-end items-center;
+}
+
+.flex-between {
+  @apply flex justify-between items-center;
+}
