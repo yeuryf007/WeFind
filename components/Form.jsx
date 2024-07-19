@@ -185,10 +185,11 @@ const Form = ({ type, submitting, handleSubmit }) => {
 									name="phoneNumber"
 									value={formData.phoneNumber}
 									onChange={handleInputChange}
-									placeholder="Número teléfono"
-									pattern="[0-9]*"
+									placeholder="1234567890"
+									pattern="[0-9]{10}"
 									className="form_textarea_sm resize-none"
 								/>
+								<span className="text-gray-500 text-xs">No se admiten simbilos ni espacios.</span>
 							</label>
 							<label className="w-1/2 ml-1">
 								<span className="font-inter font-semibold text-base text-gray-700">
