@@ -98,13 +98,20 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		}));
 	};
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    setFormData(prevState => ({
-      ...prevState,
-      image: file
-    }));
-  };
+	const handleImageUpload = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setFormData((prevState) => ({
+					...prevState,
+					image: file,
+					imagePreview: reader.result,
+				}));
+			};
+			reader.readAsDataURL(file);
+		}
+	};
 
 	const handleCancel = (e) => {
 		e.preventDefault();
