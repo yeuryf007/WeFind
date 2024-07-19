@@ -17,7 +17,7 @@ const Home = () => {
         <div className="categories">
           <Boton titulo="Comestibles" imagen='/assets/images/comestibles.svg'/>
           <Boton titulo="Hogar" imagen='/assets/images/hogar.svg'/>
-          <Boton titulo="Deporte" imagen='/assets/images/deporte.svg'/>
+          <Boton titulo="Deportes" imagen='/assets/images/deportes.svg'/>
           <Boton titulo="Salud" imagen='/assets/images/salud.svg'/>
         </div>
     </section>
