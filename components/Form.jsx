@@ -190,7 +190,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
 									pattern="[0-9]{10}"
 									className="form_textarea_sm resize-none"
 								/>
-								<span className="text-gray-500 text-xs">No se admiten simbilos ni espacios.</span>
+								<span className="text-gray-500 text-xs"> Solo 10 digitos, no se admiten simbilos ni espacios.</span>
 							</label>
 							<label className="w-1/2 ml-1">
 								<span className="font-inter font-semibold text-base text-gray-700">
