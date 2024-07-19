@@ -39,6 +39,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		"arma",
 		"rifle",
 		"explosivo",
+		"dildo",
 
 		// Términos discriminatorios
 		"gay",
