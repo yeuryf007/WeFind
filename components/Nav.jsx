@@ -37,11 +37,11 @@ const Nav = () => {
         <div className='flex gap-5 align-center'>
 
           <Link href="/categorias" className='navtext'>
-            Categorias
+            Productos
           </Link>
           
           <Link href="/crear_post" className='navtext'>
-            Acciones
+            Añadido
           </Link>
 
           
@@ -106,7 +106,7 @@ const Nav = () => {
         <div className='sm:hidden flex relative'>
           {usuariologeado ? (
             <div className='flex border-l-white border-l-2'>
-              <Image src="/assets/images/dropdown.svg" width={65} height={37} className="rounded-full"
+              <Image src="/assets/images/dropdown.svg" width={65} height={37} className="rounded-full" alt='dropdown'
               onClick={() => setdropdown ((prev) => !prev)}/>
 
               {dropdown && (
@@ -114,14 +114,13 @@ const Nav = () => {
                   <Link href="/categorias"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
-                    Categorias
+                    Productos
                   </Link>
 
                   <Link href="/crear_post"
                   className='dropdown_link'
                   onClick={() => setdropdown(false)}>
-
-                    Acciones
+                    Añadido
                   </Link>
 
                   <Link href="/" className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white" onClick={() => {
@@ -144,7 +143,7 @@ const Nav = () => {
                 ))
               }*/}
               
-              <Image src="/assets/images/dropdown.svg" width={65} height={37}
+              <Image src="/assets/images/dropdown.svg" width={65} height={37} alt='dropdown'
               onClick={() => setdropdown ((prev) => !prev)}/>
                 {dropdown && (
                   

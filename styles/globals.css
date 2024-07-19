@@ -165,10 +165,10 @@
 
 /* Form Component */
 .form_textarea {
-  @apply w-3/4 flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
+  @apply w-full flex rounded-lg h-[50px] mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
 }
 .form_textarea_sm {
-  @apply flex rounded-lg h-[50px] w-full mt-2 p-3 text-sm text-gray-500 outline-0 lg:w-[250px] border-2;
+  @apply flex rounded-lg h-[50px] w-full mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
 }
 .form_textarea_desc {
   @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0 border-2;
@@ -179,7 +179,7 @@
 }
 
 .file-select-img{
-  @apply w-full lg:w-1/2 h-52 flex-col border-2 relative inline-block rounded-lg;
+  @apply w-9/12  h-52 flex-1 border-2 relative inline-block rounded-lg;
   background-color: white;
   color: #BABABA;
   cursor: pointer;
