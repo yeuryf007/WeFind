@@ -37,18 +37,8 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		"marihuana",
 		"cannabis",
 		"arma",
-		"pistola",
 		"rifle",
 		"explosivo",
-
-		// Términos relacionados con actividades ilegales
-		"contrabando",
-		"tráfico",
-		"robo",
-		"estafa",
-		"fraude",
-		"blanqueo",
-		"prostitución",
 
 		// Términos discriminatorios
 		"gay",
@@ -65,6 +55,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		"golpear",
 		"abusar",
 	];
+
 	const router = useRouter();
 	const [formData, setFormData] = useState({
 		storeName: "",
@@ -80,8 +71,15 @@ const Form = ({ type, submitting, handleSubmit }) => {
 	});
 
 	const validateContent = (text) => {
-		return !forbiddenWords.some((word) => text.toLowerCase().includes(word));
-	};
+  if (!text) return true; // Si el texto está vacío, lo consideramos válido
+  
+  const normalizedText = text.toLowerCase().trim();
+  
+  return !forbiddenWords.some(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'i');
+    return regex.test(normalizedText);
+  });
+};
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -124,21 +122,23 @@ const Form = ({ type, submitting, handleSubmit }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		if (!formData.location) {
-			alert("Por favor, seleccione una ubicación en el mapa.");
-			return;
+		  alert('Por favor, seleccione una ubicación en el mapa.');
+		  return;
 		}
-		if (
-			!validateContent(formData.storeName) ||
-			!validateContent(formData.productName) ||
-			!validateContent(formData.description)
-		) {
-			alert(
-				"Por favor, evite el uso de lenguaje inapropiado o productos no permitidos."
-			);
-			return;
+		
+		const invalidFields = [];
+		
+		if (!validateContent(formData.storeName)) invalidFields.push('nombre de la tienda');
+		if (!validateContent(formData.productName)) invalidFields.push('nombre del producto');
+		if (!validateContent(formData.description)) invalidFields.push('descripción');
+		
+		if (invalidFields.length > 0) {
+		  alert(`Por favor, revise el contenido en los siguientes campos: ${invalidFields.join(', ')}. Evite el uso de lenguaje inapropiado o productos no permitidos.`);
+		  return;
 		}
+		
 		handleSubmit(formData);
-	};
+	  };
 	return (
 		<section className="w-full max-w-full flex-col px-6">
 			<h1 className="head_text text-left">
