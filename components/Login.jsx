@@ -7,7 +7,6 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Maneja la lógica de inicio de sesión aquí
     console.log('Email:', email);
     console.log('Password:', password);
   };

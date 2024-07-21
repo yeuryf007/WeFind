@@ -24,7 +24,7 @@ const Feed = () => {
   }
 
   if (!mounted) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (

@@ -119,7 +119,7 @@
 }
 
 .head_text {
-  @apply mt-8 text-2xl font-inter leading-[1.15] text-black sm:text-3xl font-bold;
+  @apply mt-8 text-2xl font-inter leading-[1.15] text-white sm:text-3xl font-bold;
 }
 
 .orange_gradient {
@@ -143,7 +143,7 @@
 }
 
 .searchbar{
-  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden rounded-full h-12;
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:outline-none border-hidden rounded-full h-12;
 }
 
 .copy_btn {

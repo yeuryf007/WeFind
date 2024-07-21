@@ -120,7 +120,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
       </p>
       <div className='flex flex-wrap w-full'>
         <div className='file-select-img mb-4 ml-4 mr-4'>
-          <label className='flex flex-center mt-8 mb-4'>
+          <label className='flex flex-center items-center mt-8 mb-4'>
             <Image src="/assets/images/add-image.svg" alt="Añadir imagen" width={70} height={30} className='object-contain'/>
             <input 
               type='file' 
