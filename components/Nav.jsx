@@ -32,7 +32,7 @@ const Nav = () => {
       
       {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden w-7/12 justify-between items-center pl-6'>
+      <div className='sm:flex hidden w-7/12 justify-between items-center'>
                 
         <div className='flex gap-5 align-center'>
 
@@ -41,7 +41,7 @@ const Nav = () => {
           </Link>
           
           <Link href="/crear_post" className='navtext'>
-            Añadido
+            Publicar Productos
           </Link>
 
           
