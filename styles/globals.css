@@ -147,7 +147,7 @@
 }
 
 .searchbar{
-  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden rounded-full h-12;
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:outline-none border-hidden rounded-full h-12;
 }
 
 .copy_btn {
