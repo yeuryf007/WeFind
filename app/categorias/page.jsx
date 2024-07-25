@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, Suspense } from "react";
 import Card from "@components/Card";
+import SkeletonCard from "@components/SkeletonCard";
 import { collection, getDocs, GeoPoint, query, where } from "firebase/firestore";
 import { db } from "@app/firebase/config";
 import { useSearchParams } from 'next/navigation';
@@ -22,16 +23,12 @@ const calculateDistance = (point1, point2) => {
 const CategoriaContent = () => {
 	const [products, setProducts] = useState([]);
 	const [userLocation, setUserLocation] = useState(new GeoPoint(18.4861, -69.9312));
-	const [mounted, setMounted] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [sortBy, setSortBy] = useState('distance');
 	const searchParams = useSearchParams();
-  
+
 	useEffect(() => {
-	  setMounted(true);
-	}, []);
-  
-	useEffect(() => {
-	  if (!mounted) return;
+		setLoading(true);
   
 	  const category = searchParams.get('category');
 	  const search = searchParams.get('search');
@@ -96,22 +93,14 @@ const CategoriaContent = () => {
 					setProducts(sortProducts(userLocation));
 				  }
 				} catch (error) {
-				  console.error("Error fetching products:", error);
-				  if (error.code) {
-					console.error("Error code:", error.code);
-				  }
-				  if (error.message) {
-					console.error("Error message:", error.message);
-				  }
-				}
-			  };
-		  
-			  fetchProducts();
-  }, [mounted, searchParams, sortBy]);
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!mounted) {
-    return null;
-  }
+    fetchProducts();
+  }, [searchParams, sortBy]);
 
   const category = searchParams.get('category');
   const search = searchParams.get('search');
@@ -138,13 +127,18 @@ const CategoriaContent = () => {
         </select>
       </div>
       <div className="flex flex-wrap gap-8 items-center justify-center">
-        {products.map((product) => (
-          <Card
-            key={product.id}
-            product={product}
-            distance={product.distance}
-          />
-        ))}
+        {loading ? (
+          // Mostrar SkeletonCards durante la carga
+          Array(12).fill().map((_, index) => <SkeletonCard key={index} />)
+        ) : (
+          products.map((product) => (
+            <Card
+              key={product.id}
+              product={product}
+              distance={product.distance}
+            />
+          ))
+        )}
       </div>
     </div>
   );
