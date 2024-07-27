@@ -39,7 +39,7 @@ const Nav = () => {
       
 
       {/* Navegación Desktop */}
-      <div className="sm:flex hidden w-full justify-between items-center">
+      <div className="lg:flex hidden w-full justify-between items-center">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src="/assets/images/logo.svg"
@@ -103,27 +103,33 @@ const Nav = () => {
       </div>
 
       {/* Navegación Móvil */}
-      <div className="sm:hidden flex relative w-full justify-between items-center">
-      <Link href="/" className="flex gap-2 flex-center">
-        <Image
-          src="/assets/images/logo.svg"
-          alt="WeFind Logo"
-          width={246}
-          height={70}
-          className="object-contain"
-        />
-      </Link>
-        <Image
-          src="/assets/images/dropdown.svg"
-          width={65}
-          height={37}
-          alt="dropdown"
-          onClick={() => setDropdown((prev) => !prev)}
-          className="cursor-pointer"
-        />
+<div className="lg:hidden flex relative w-full justify-between items-center">
+  <Link href="/" className="flex gap-2 flex-center">
+    <Image
+      src="/assets/images/logo.svg"
+      alt="WeFind Logo"
+      width={226}
+      height={70}
+      className="object-contain"
+    />
+  </Link>
+  <Image
+    src={dropdown ? "/assets/icons/close.svg" : "/assets/icons/dropdown.svg"}
+    width={45}
+    height={37}
+    alt={dropdown ? "close" : "dropdown"}
+    onClick={() => setDropdown((prev) => !prev)}
+    className="cursor-pointer"
+  />
 
         {dropdown && (
           <div className="dropdown">
+            <Link
+              href="/"
+              className="dropdown_link"
+              onClick={() => setDropdown(false)}>
+              Inicio
+            </Link>
             <Link
               href="/categorias"
               className="dropdown_link"
