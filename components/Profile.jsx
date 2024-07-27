@@ -1,4 +1,3 @@
-import PromptCard from "./PromptCard"
 import { signOut } from "next-auth/react"
 
 const Profile = ({name, desc, data, handleEdit, handleDelete}) => {
