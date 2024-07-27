@@ -129,7 +129,7 @@ const ProductDetails = ({ productId }) => {
         </div>
         
         {mapLoaded ? (
-          <div style={{ width: '650px', height: '400px', cursor: 'pointer' }} className="lg:ml-32" onClick={handleMapClick}>
+          <div style={{ width: '650px', height: '400px', cursor: 'pointer' }} className="lg:ml-32 flex-wrap" onClick={handleMapClick}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={product.Location ? { lat: product.Location.latitude, lng: product.Location.longitude } : { lat: 0, lng: 0 }}
