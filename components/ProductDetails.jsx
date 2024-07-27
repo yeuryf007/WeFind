@@ -99,24 +99,24 @@ const ProductDetails = ({ productId }) => {
   if (!product) return <div>Product not found</div>;
 
   return (
-    <div className='flex flex-col glassmorphism w-11/12 m-4'>
-      <div className='flex flex-wrap'>
+    <div className='flex flex-col bg-white w-full rounded-t-lg'>
+      <div className='flex flex-wrap p-4 justify-center'>
         <Image 
           src={product.Image || "/assets/images/placeholder.png"} 
           width={500} 
           height={3000} 
-          className="object-contain border-2" 
+          className="object-contain border-2 rounded-lg" 
           alt={product.Name}
         />
         <div className="flex flex-col lg:w-1/2 lg:ml-8">
-          <h1 className='font-inter font-semibold head_text text-gray-700'>{product.Name}</h1>
-          <span className='font-inter font-semibold text-base text-gray-700'>Categoría: {product.Category}</span>
+          <h1 className='font-inter font-bold text-2xl mt-8 text-gray-700'>{product.Name}</h1>
+          <span className='font-inter font-semibold text-base'>Categoría: {product.Category}</span>
           <span className='font-inter font-semibold text-2xl mt-8'>${product.Price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-          <p className='desc text-left max-w-md'>{product.Description}</p>
+          <p className='text-left max-w-md'>{product.Description}</p>
         </div>
       </div>
-
-      <div className='flex flex-wrap mt-8'>
+      <div className="border-2 mx-16 my-6"></div>
+      <div className='flex flex-wrap p-6'>
         <div className="flex flex-col gap-5">
           <h2 className='font-inter font-semibold text-2xl'>Información de la tienda</h2>
           <ul>
@@ -129,7 +129,7 @@ const ProductDetails = ({ productId }) => {
         </div>
         
         {mapLoaded ? (
-          <div style={{ width: '700px', height: '400px', cursor: 'pointer' }} className="lg:ml-36" onClick={handleMapClick}>
+          <div style={{ width: '650px', height: '400px', cursor: 'pointer' }} className="lg:ml-32" onClick={handleMapClick}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={product.Location ? { lat: product.Location.latitude, lng: product.Location.longitude } : { lat: 0, lng: 0 }}

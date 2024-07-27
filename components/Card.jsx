@@ -19,7 +19,7 @@ const Card = ({ product, distance }) => {
 
   return (
     <Link href={`/detalles?id=${product.id}`} onClick={handleClick}>
-      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-col items-center">
+      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-col items-center hover:scale-110 transform transition duration-500">
         <div className='w-full h-3/5 overflow-hidden rounded-lg border-2'>
           <Image
             src={product.Image}
