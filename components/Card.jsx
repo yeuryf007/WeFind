@@ -4,11 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const Card = ({ product, distance }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    window.history.pushState({ productData: product }, '', `/detalles?id=${product.id}`);
-    window.location.href = `/detalles?id=${product.id}`;
-  };
 
   const truncateText = (text, limit) => {
     if (text.length <= limit) return text;
@@ -18,7 +13,7 @@ const Card = ({ product, distance }) => {
   const nameCharacterLimit = 30;
 
   return (
-    <Link href={`/detalles?id=${product.id}`} onClick={handleClick}>
+    <Link href={`/detalles?id=${product.id}`}>
       <div className="cursor-pointer bg-white rounded-lg w-80 h-60 flex flex-col items-center hover:scale-110 transform transition duration-500">
         <div className='w-full h-full overflow-hidden rounded-lg border-2'>
           <Image

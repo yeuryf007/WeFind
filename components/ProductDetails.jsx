@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc, setDoc, increment } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { db } from '@app/firebase/config';
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
+import Loader from './Loader';
 
 const DEFAULT_LOCATION = { lat: 18.4649639, lng: -69.9479573 };
 
@@ -204,7 +205,7 @@ const ProductDetails = ({ productId }) => {
     </div>
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><Loader/></div>;
   if (!product) return <div>Product not found</div>;
 
   return (

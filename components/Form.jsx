@@ -179,6 +179,9 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		if (!validateContent(formData.description)) {
 			newErrors.description = "La descripción contiene lenguaje inapropiado.";
 		}
+		if (formData.Phone && !/^\d{10}$/.test(formData.Phone)) {
+			newErrors.phone = "El número de teléfono debe tener exactamente 10 dígitos.";
+		}
 
 		return newErrors;
 	};
@@ -326,6 +329,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
 								type="file"
 								onChange={handleImageUpload}
 								accept="image/*"
+								capture="environment"
 								className="src-file"
 							/>
 							{formData.image ? "Cambiar imagen" : "Subir imagen"}
