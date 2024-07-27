@@ -66,43 +66,50 @@ const Nav = () => {
         </div>
 
         {loading ? (
-          <div className="w-40 h-10 bg-gray-200 rounded animate-pulse"></div>
-        ) : user ? (
-          <div className="flex gap-3 md:gap-5">
-            <div className="flex relative">
-              <Image
-                src={user.photoURL || "/assets/images/profile.png"}
-                width={45}
-                height={45}
-                className="rounded-full cursor-pointer"
-                alt="profile"
-                onClick={toggleDropdown}
-                onError={(e) => {
-                  e.target.src = "/assets/images/profile.png";
-                }}
-              />
-              {dropdown && (
-                <div className="dropdown">
-                  <button
-                    type="button"
-                    onClick={signOut}
-                    className="w-full dropdown_link hover:bg-slate-800 hover:text-white">
-                    Cerrar sesión
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-3 md:gap-5">
-            <button onClick={signInWithGoogle} className="white_btn">
-              Iniciar sesión con Google
-            </button>
-          </div>
-        )}
-      </div>
+  <div className="w-40 h-10 bg-gray-200 rounded animate-pulse"></div>
+) : user ? (
+  <div className="flex gap-3 md:gap-5">
+    <div className="flex relative">
+      <Image
+        src={user.photoURL || "/assets/images/profile.png"}
+        width={45}
+        height={45}
+        className="rounded-full cursor-pointer"
+        alt="profile"
+        onClick={toggleDropdown}
+        onError={(e) => {
+          e.target.src = "/assets/images/profile.png";
+        }}
+      />
+      {dropdown && (
+        <div className="dropdown">
+          <Link
+            href={`/user-products/${user.uid}`}
+            className="w-full dropdown_link hover:bg-slate-800 hover:text-white"
+            onClick={() => setDropdown(false)}
+          >
+            Mis Productos
+          </Link>
+          <button
+            type="button"
+            onClick={signOut}
+            className="w-full dropdown_link hover:bg-slate-800 hover:text-white">
+            Cerrar sesión
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+) : (
+  <div className="flex gap-3 md:gap-5">
+    <button onClick={signInWithGoogle} className="white_btn">
+      Iniciar sesión con Google
+    </button>
+  </div>
+)}
+</div>
 
-      {/* Navegación Móvil */}
+{/* Navegación Móvil */}
 <div className="lg:hidden flex relative w-full justify-between items-center">
   <Link href="/" className="flex gap-2 flex-center">
     <Image
@@ -122,46 +129,54 @@ const Nav = () => {
     className="cursor-pointer"
   />
 
-        {dropdown && (
-          <div className="dropdown">
-            <Link
-              href="/"
-              className="dropdown_link"
-              onClick={() => setDropdown(false)}>
-              Inicio
-            </Link>
-            <Link
-              href="/categorias"
-              className="dropdown_link"
-              onClick={() => setDropdown(false)}>
-              Productos
-            </Link>
+  {dropdown && (
+    <div className="dropdown">
+      <Link
+        href="/"
+        className="dropdown_link"
+        onClick={() => setDropdown(false)}>
+        Inicio
+      </Link>
+      <Link
+        href="/categorias"
+        className="dropdown_link"
+        onClick={() => setDropdown(false)}>
+        Productos
+      </Link>
 
-            {user && (
-              <Link
-                href="/crear_post"
-                className="dropdown_link"
-                onClick={() => setDropdown(false)}>
-                Publicar Productos
-              </Link>
-            )}
+      {user && (
+        <>
+          <Link
+            href="/crear_post"
+            className="dropdown_link"
+            onClick={() => setDropdown(false)}>
+            Publicar Productos
+          </Link>
+          <Link
+            href={`/user-products/${user.uid}`}
+            className="dropdown_link"
+            onClick={() => setDropdown(false)}>
+            Mis Productos
+          </Link>
+        </>
+      )}
 
-            {user ? (
-              <button
-                onClick={signOut}
-                className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
-                Cerrar Sesión
-              </button>
-            ) : (
-              <button
-                onClick={signInWithGoogle}
-                className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
-                Iniciar sesión con Google
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      {user ? (
+        <button
+          onClick={signOut}
+          className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
+          Cerrar Sesión
+        </button>
+      ) : (
+        <button
+          onClick={signInWithGoogle}
+          className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
+          Iniciar sesión con Google
+        </button>
+      )}
+    </div>
+  )}
+</div>
     </nav>
   );
 };
