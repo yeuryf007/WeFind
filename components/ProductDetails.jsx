@@ -99,8 +99,8 @@ const ProductDetails = ({ productId }) => {
   if (!product) return <div>Product not found</div>;
 
   return (
-    <div className='flex flex-col bg-white w-full rounded-t-lg'>
-      <div className='flex flex-wrap p-4 justify-center'>
+    <div className='bg-white w-full'>
+      <div className='flex p-4 justify-center max-lg:flex-wrap lg:flex-row'>
         <Image 
           src={product.Image || "/assets/images/placeholder.png"} 
           width={500} 
@@ -116,7 +116,7 @@ const ProductDetails = ({ productId }) => {
         </div>
       </div>
       <div className="border-2 mx-16 my-6"></div>
-      <div className='flex flex-wrap p-6'>
+      <div className='flex p-6 justify-center max-lg:flex-wrap lg:flex-row'>
         <div className="flex flex-col gap-5">
           <h2 className='font-inter font-semibold text-2xl'>Información de la tienda</h2>
           <ul>
@@ -129,7 +129,7 @@ const ProductDetails = ({ productId }) => {
         </div>
         
         {mapLoaded ? (
-          <div style={{ width: '650px', height: '400px', cursor: 'pointer' }} className="lg:ml-32" onClick={handleMapClick}>
+          <div style={{ width: '650px', height: '400px', cursor: 'pointer' }} className="lg:ml-32 flex-wrap" onClick={handleMapClick}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
               center={product.Location ? { lat: product.Location.latitude, lng: product.Location.longitude } : { lat: 0, lng: 0 }}
