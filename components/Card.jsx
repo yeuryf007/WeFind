@@ -19,8 +19,8 @@ const Card = ({ product, distance }) => {
 
   return (
     <Link href={`/detalles?id=${product.id}`} onClick={handleClick}>
-      <div className="cursor-pointer bg-white rounded-lg w-80 h-48 flex flex-col items-center hover:scale-110 transform transition duration-500">
-        <div className='w-full h-3/5 overflow-hidden rounded-lg border-2'>
+      <div className="cursor-pointer bg-white rounded-lg w-80 h-60 flex flex-col items-center hover:scale-110 transform transition duration-500">
+        <div className='w-full h-full overflow-hidden rounded-lg border-2'>
           <Image
             src={product.Image}
             width={320}
@@ -30,7 +30,7 @@ const Card = ({ product, distance }) => {
           />
         </div>
         
-        <div className="w-full flex-col ml-4 pl-4">
+        <div className="w-full flex-col ml-4 pl-4 pb-2">
           <h1 className="font-inter font-semibold text-gray-700 text-base">
             {truncateText(product.Name, nameCharacterLimit)}
           </h1>

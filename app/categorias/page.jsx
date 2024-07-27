@@ -5,6 +5,7 @@ import SkeletonCard from "@components/SkeletonCard";
 import { collection, getDocs, GeoPoint, query, where } from "firebase/firestore";
 import { db } from "@app/firebase/config";
 import { useSearchParams } from 'next/navigation';
+import Feed from "@components/Feed";
 
 const calculateDistance = (point1, point2) => {
 	const R = 6371;
@@ -110,12 +111,15 @@ const CategoriaContent = () => {
   };
 
   return (
-    <div className="w-full flex-col px-12">
+    <div className="w-full flex-col pl-6 pr-6 pb-6">
       <h1 className="head_text text-left mb-6">
         {category ? `Categoría: ${category}` : (search ? `Resultados para: ${search}` : 'Todos los productos')}
       </h1>
       <div className="mb-4">
-        <label htmlFor="sort-select" className="mr-2 font-bold">Ordenar por:</label>
+	  <div className="flex flex-wrap justify-left mb-4">
+	  <Feed />
+	  </div>
+        <label htmlFor="sort-select" className="mr-2 text-white font-bold ">Ordenar por:</label>
         <select 
           id="sort-select"
           value={sortBy}

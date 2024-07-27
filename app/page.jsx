@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   return (
-    <section className="w-full flex-center flex-col mt-10 p-3 relative">
+    <section className="w-full flex-center flex-col mt-10 p-6 relative">
       {isPopupVisible && !user && (
         <div className="absolute top-[-40px] right-4 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
           <button
@@ -60,7 +60,9 @@ const Home = () => {
         Encuentra y compara precios de diversos productos cerca de ti.
       </h2>
       
+      <div className="mt-12 mb-3 w-full">
       <DynamicFeed />
+      </div>
       
       <h1 className="head_text text-center text-white mb-8">
         Categorías destacadas

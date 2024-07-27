@@ -187,7 +187,7 @@
 
 /* Feed Component */
 .feed {
-  @apply mt-12 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2 mb-3;
+  @apply mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2;
 }
 
 /* Form Component */
