@@ -72,6 +72,9 @@ const Home = () => {
         <Boton titulo="Hogar" imagen='/assets/images/hogar.svg'/>
         <Boton titulo="Deportes" imagen='/assets/images/deportes.svg'/>
         <Boton titulo="Salud" imagen='/assets/images/salud.svg'/>
+        <Boton titulo="Tecnología" imagen='/assets/images/tecnologia.svg'/>
+        <Boton titulo="Ropa" imagen='/assets/images/ropa.svg'/>
+        <Boton titulo="Otros" imagen='/assets/images/otros.svg'/>
       </div>
     </section>
   )

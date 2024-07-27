@@ -6,7 +6,7 @@
 
 /* Categories component*/
 .categories{
-  @apply w-full gap-16 flex flex-wrap  text-center mx-auto justify-center;
+  @apply w-1/2 gap-16 flex flex-wrap  text-center mx-auto justify-center;
 }
 
 .error-message {
