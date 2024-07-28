@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import SkeletonForm from "./SkeletonForm";
 import { getAuth } from "firebase/auth";
 
-const Form = ({ type, submitting, handleSubmit }) => {
+const Form = ({ type, submitting, handleSubmit, similarProducts, handleConfirmation }) => {
 	const [loading, setLoading] = useState(true);
 	const [userUID, setUserUID] = useState(null);
 	const [errors, setErrors] = useState({});
@@ -85,6 +85,7 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		productName: "",
 		price: "",
 		category: "Seleccione una categoria",
+		specificLoc: "",
 		description: "",
 		location: null,
 		image: null,
@@ -179,6 +180,9 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		if (!validateContent(formData.description)) {
 			newErrors.description = "La descripción contiene lenguaje inapropiado.";
 		}
+		if (!validateContent(formData.specificLoc)) {
+			newErrors.specificLoc = "La dirección específica contiene lenguaje inapropiado.";
+		}
 		if (formData.Phone && !/^\d{10}$/.test(formData.Phone)) {
 			newErrors.phone = "El número de teléfono debe tener exactamente 10 dígitos.";
 		}
@@ -188,26 +192,26 @@ const Form = ({ type, submitting, handleSubmit }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-
+	
 		const newErrors = validateForm();
-
+	
 		if (Object.keys(newErrors).length > 0) {
-			setErrors(newErrors);
-			setTempMessage("Por favor, rellene todos los campos obligatorios");
-			window.scrollTo({ top: 0, behavior: "smooth" });
-			setTimeout(() => setTempMessage(""), 5000);
-			return;
+		  setErrors(newErrors);
+		  setTempMessage("Por favor, rellene todos los campos obligatorios");
+		  window.scrollTo({ top: 0, behavior: "smooth" });
+		  setTimeout(() => setTempMessage(""), 5000);
+		  return;
 		}
-
+	
 		// Si no hay errores, procede con el envío
 		const formDataWithUID = {
-			...formData,
-			Added_by: userUID,
+		  ...formData,
+		  Added_by: userUID,
 		};
-
+	
 		console.log("Form submitted");
 		handleSubmit(formDataWithUID);
-	};
+	  };
 
 	useEffect(() => {
 		setLoading(false);
@@ -218,6 +222,34 @@ const Form = ({ type, submitting, handleSubmit }) => {
 	}
 	return (
 		<section className="w-full max-w-full flex-col px-6">
+			{similarProducts.length > 0 && (
+        <div className="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg ml-6 mr-6">
+            <h2 className="text-xl font-bold mb-4">Productos similares encontrados</h2>
+            <p>Se han encontrado productos similares cerca de la ubicación seleccionada:</p>
+            <ul className="list-disc pl-5 mb-4">
+              {similarProducts.map((product, index) => (
+                <li key={index}>{product.Name} - {product.Store_name}</li>
+              ))}
+            </ul>
+            <p>¿Desea continuar con la creación del producto?</p>
+            <div className="flex justify-end mt-4">
+              <button 
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleConfirmation(false, formData)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="bg-green-500 text-white px-4 py-2 rounded"
+                onClick={() => handleConfirmation(true, formData)}
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 			{tempMessage && (
 				<div
 					className="bg-red-100 border border-red-400 text-red-700 px-40 py-10 rounded absolute mb-4 mt-2"
@@ -228,9 +260,6 @@ const Form = ({ type, submitting, handleSubmit }) => {
 			<h1 className="head_text text-left">
 				<span className="head_text"> Publicar productos</span>
 			</h1>
-
-			
-
 			<form
 				onSubmit={onSubmit}
 				className="mt-10 w-full flex flex-col gap-5 border-t-2">
@@ -311,6 +340,21 @@ const Form = ({ type, submitting, handleSubmit }) => {
 							</label>
 						</div>
 					</div>
+					<label className="w-full">
+  <span className="font-inter font-semibold text-base text-white">
+    Especificaciones de dirección
+  </span>
+  <textarea
+    name="specificLoc"
+    value={formData.specificLoc}
+    onChange={handleInputChange}
+    placeholder="Ej: Frente al parque central, local color azul, segundo piso del centro comercial..."
+    className="form_textarea resize-none"
+  />
+  <span className="text-gray-500 text-xs">
+    Proporcione detalles que ayuden a los usuarios a encontrar el producto fácilmente.
+  </span>
+</label>
 				</div>
 				<p className="text-sm text-white sm:text-xl max-w-2xl text-left ml-4">
 					3. Llenar los campos con la información del producto.
