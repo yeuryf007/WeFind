@@ -250,7 +250,7 @@ const ProductDetails = ({ productId }) => {
             </GoogleMap>
           </div>
         ) : (
-          <div>Loading map...</div>
+          <div><Loader/></div>
         )}
       </div>
       <div className="mt-4 flex flex-col items-center mb-10">
