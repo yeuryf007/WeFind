@@ -8,7 +8,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '@app/firebase/config';
 import Image from 'next/image';
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 import Loader from './Loader';
 
 const categories = ["Ropa", "Tecnología", "Comestibles", "Hogar", "Deportes", "Salud", "Otros"];
@@ -32,7 +32,22 @@ const UserProducts = ({ uid }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [errors, setErrors] = useState({});
   const [tempMessage, setTempMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
+  // Filtro de barra de busqueda
+  useEffect(() => {
+    const filtered = products.filter(product => 
+      product.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  }, [searchTerm, products]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Comprueba si el usuario está autenticado y si es el dueño de los productos
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -47,16 +62,17 @@ const UserProducts = ({ uid }) => {
     return () => unsubscribe();
   }, [uid, router]);
 
+  // Redirige a la página de detalles del producto
   const handleProductClick = (product) => {
     router.push(`/detalles?id=${product.id}`);
   };
 
+  // Obtiene los productos del usuario
   const fetchProducts = async (userId) => {
     const q = query(collection(db, 'Products'), where('Added_by', '==', userId));
     const querySnapshot = await getDocs(q);
     const productsData = querySnapshot.docs.map(doc => {
       const data = doc.data();
-      console.log(data);
       return {
         id: doc.id,
         ...data,
@@ -74,15 +90,15 @@ const UserProducts = ({ uid }) => {
     }
   }, []);
 
-  const handleDelete = useCallback((product) => {
-    setDeleteProduct(product);
-  }, []);
-
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImageUpload(e.target.files[0]);
     }
   };
+
+  const handleDelete = useCallback((product) => {
+    setDeleteProduct(product);
+  }, []);
 
   const uploadImage = async () => {
     if (imageUpload) {
@@ -105,16 +121,7 @@ const UserProducts = ({ uid }) => {
     }
   };
 
-  const validateContent = (text) => {
-    if (!text) return true;
-    const normalizedText = text.toLowerCase().trim();
-    return !forbiddenWords.some((word) => {
-      const regex = new RegExp(`\\b${word}\\b`, "i");
-      console.log(regex.test(normalizedText));
-      return regex.test(normalizedText);
-    });
-  };
-
+  // Validar formulario
   const validateForm = (formData) => {
     const newErrors = {};
 
@@ -154,6 +161,17 @@ const UserProducts = ({ uid }) => {
     return newErrors;
   };
 
+  // Validar contenido del formulario
+  const validateContent = (text) => {
+    if (!text) return true;
+    const normalizedText = text.toLowerCase().trim();
+    return !forbiddenWords.some((word) => {
+      const regex = new RegExp(`\\b${word}\\b`, "i");
+      return regex.test(normalizedText);
+    });
+  };
+
+  // Actualizar producto
   const updateProduct = async (updatedProduct) => {
     const newErrors = validateForm(updatedProduct);
 
@@ -198,13 +216,28 @@ const UserProducts = ({ uid }) => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center text-white">Mis Productos</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map(product => (
-          <div 
-            key={product.id} 
-            className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer"
-            onClick={() => handleProductClick(product)}
-          >
+      {/* Search Bar */}
+      <div className="mb-6 relative">
+        <input
+          type="text"
+          placeholder="Buscar productos por nombre, descripción o categoría..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="w-full p-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+        />
+        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+      </div>
+
+      {filteredProducts.length === 0 ? (
+        <p className="text-center text-white">No se encontraron productos que coincidan con la búsqueda.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProducts.map(product => (
+            <div 
+              key={product.id} 
+              className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer"
+              onClick={() => handleProductClick(product)}
+            >
             <div className="relative h-48">
               <Image 
                 src={product.Image || "/assets/images/placeholder.png"} 
@@ -248,6 +281,7 @@ const UserProducts = ({ uid }) => {
           </div>
         ))}
       </div>
+      )}
 
       {editProduct && (
         <div className="fixed z-10 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full items-center justify-center">
