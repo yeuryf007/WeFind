@@ -233,6 +233,7 @@ const ProductDetails = ({ productId }) => {
             <li>Nombre: {product.Store_name || 'N/A'}</li>
             <li>Teléfono: {product.Phone || 'N/A'}</li>
             <li>Delivery: {product.Delivery || 'N/A'}</li>
+            <li>Especificaciones: {product.SpecificLoc || 'N/A'}</li>
           </ul>
           <p className='text-left max-w-md text-red-500'>* Si no permite que el navegador utilice su ubicación, se usará una dirección inicial predeterminada.</p>
           <p className='text-left max-w-md text-red-500'>* Al hacer click en el mapa será redirigido a Google Maps.</p>
