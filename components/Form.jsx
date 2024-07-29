@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Mapjsx from "./Map.js";
 import { useRouter } from "next/navigation";
+import SkeletonForm from "./SkeletonForm";
+import { getAuth } from "firebase/auth";
 
-const Form = ({ type, submitting, handleSubmit }) => {
+const Form = ({ type, submitting, handleSubmit, similarProducts, handleConfirmation }) => {
+	const [loading, setLoading] = useState(true);
+	const [userUID, setUserUID] = useState(null);
+	const [errors, setErrors] = useState({});
+	const [tempMessage, setTempMessage] = useState("");
+
 	const forbiddenWords = [
 		// Palabrotas y lenguaje ofensivo
 		"mierda",
@@ -57,6 +64,19 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		"abusar",
 	];
 
+	useEffect(() => {
+		const auth = getAuth();
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			if (user) {
+				setUserUID(user.uid);
+			} else {
+				setUserUID(null);
+			}
+		});
+
+		return () => unsubscribe();
+	}, []);
+
 	const router = useRouter();
 	const [formData, setFormData] = useState({
 		storeName: "",
@@ -64,7 +84,8 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		delivery: "Sin delivery",
 		productName: "",
 		price: "",
-		category: "Comestibles",
+		category: "Seleccione una categoria",
+		specificLoc: "",
 		description: "",
 		location: null,
 		image: null,
@@ -72,15 +93,15 @@ const Form = ({ type, submitting, handleSubmit }) => {
 	});
 
 	const validateContent = (text) => {
-  if (!text) return true; // Si el texto está vacío, lo consideramos válido
-  
-  const normalizedText = text.toLowerCase().trim();
-  
-  return !forbiddenWords.some(word => {
-    const regex = new RegExp(`\\b${word}\\b`, 'i');
-    return regex.test(normalizedText);
-  });
-};
+		if (!text) return true; // Si el texto está vacío, lo consideramos válido
+
+		const normalizedText = text.toLowerCase().trim();
+
+		return !forbiddenWords.some((word) => {
+			const regex = new RegExp(`\\b${word}\\b`, "i");
+			return regex.test(normalizedText);
+		});
+	};
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -120,65 +141,170 @@ const Form = ({ type, submitting, handleSubmit }) => {
 		}
 	};
 
+	const validateForm = () => {
+		const newErrors = {};
+
+		if (!formData.location) {
+			newErrors.location = "Por favor, seleccione una ubicación en el mapa.";
+		}
+
+		if (formData.category === "Seleccione una categoria") {
+			newErrors.category = "Por favor, seleccione una categoría.";
+		}
+
+		if (!formData.storeName.trim()) {
+			newErrors.storeName = "El nombre de la tienda es obligatorio.";
+		}
+
+		if (!formData.productName.trim()) {
+			newErrors.productName = "El nombre del producto es obligatorio.";
+		}
+
+		if (!formData.price.trim()) {
+			newErrors.price = "El precio es obligatorio.";
+		}
+
+		if (!formData.image) {
+			newErrors.image = "Por favor, suba una imagen del producto.";
+		}
+
+		// Validación de contenido inapropiado
+		if (!validateContent(formData.storeName)) {
+			newErrors.storeName =
+				"El nombre de la tienda contiene lenguaje inapropiado.";
+		}
+		if (!validateContent(formData.productName)) {
+			newErrors.productName =
+				"El nombre del producto contiene lenguaje inapropiado.";
+		}
+		if (!validateContent(formData.description)) {
+			newErrors.description = "La descripción contiene lenguaje inapropiado.";
+		}
+		if (!validateContent(formData.specificLoc)) {
+			newErrors.specificLoc = "La dirección específica contiene lenguaje inapropiado.";
+		}
+		if (formData.Phone && !/^\d{10}$/.test(formData.Phone)) {
+			newErrors.phone = "El número de teléfono debe tener exactamente 10 dígitos.";
+		}
+
+		return newErrors;
+	};
+
 	const onSubmit = (e) => {
 		e.preventDefault();
-		if (!formData.location) {
-		  alert('Por favor, seleccione una ubicación en el mapa.');
+	
+		const newErrors = validateForm();
+	
+		if (Object.keys(newErrors).length > 0) {
+		  setErrors(newErrors);
+		  setTempMessage("Por favor, rellene todos los campos obligatorios");
+		  window.scrollTo({ top: 0, behavior: "smooth" });
+		  setTimeout(() => setTempMessage(""), 5000);
 		  return;
 		}
-		
-		const invalidFields = [];
-		
-		if (!validateContent(formData.storeName)) invalidFields.push('nombre de la tienda');
-		if (!validateContent(formData.productName)) invalidFields.push('nombre del producto');
-		if (!validateContent(formData.description)) invalidFields.push('descripción');
-		
-		if (invalidFields.length > 0) {
-		  alert(`Por favor, revise el contenido en los siguientes campos: ${invalidFields.join(', ')}. Evite el uso de lenguaje inapropiado o productos no permitidos.`);
-		  return;
-		}
-		
-		handleSubmit(formData);
+	
+		// Si no hay errores, procede con el envío
+		const formDataWithUID = {
+		  ...formData,
+		  Added_by: userUID,
+		};
+	
+		console.log("Form submitted");
+		handleSubmit(formDataWithUID);
 	  };
+
+	useEffect(() => {
+		setLoading(false);
+	}, []);
+
+	if (loading) {
+		return <SkeletonForm />;
+	}
 	return (
 		<section className="w-full max-w-full flex-col px-6">
+			{similarProducts.length > 0 && (
+        <div className="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg ml-6 mr-6">
+            <h2 className="text-xl font-bold mb-4">Productos similares encontrados</h2>
+            <p>Se han encontrado productos similares cerca de la ubicación seleccionada:</p>
+            <ul className="list-disc pl-5 mb-4">
+              {similarProducts.map((product, index) => (
+                <li key={index}>{product.Name} - {product.Store_name}</li>
+              ))}
+            </ul>
+            <p>¿Desea continuar con la creación del producto?</p>
+            <div className="flex justify-end mt-4">
+              <button 
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleConfirmation(false, formData)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="bg-green-500 text-white px-4 py-2 rounded"
+                onClick={() => handleConfirmation(true, formData)}
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+			{tempMessage && (
+				<div
+					className="bg-red-100 border border-red-400 text-red-700 px-40 py-10 rounded absolute mb-4 mt-2"
+					role="alert">
+					<span className="block sm:inline">{tempMessage}</span>
+				</div>
+			)}
 			<h1 className="head_text text-left">
-				<span className="head_text">{type} productos</span>
+				<span className="head_text"> Publicar productos</span>
 			</h1>
-
 			<form
 				onSubmit={onSubmit}
-				className="mt-10 w-full flex flex-col gap-7 border-t-2">
+				className="mt-10 w-full flex flex-col gap-5 border-t-2">
 				<div className="flex flex-wrap border-b-2">
-					<div
-						className="flex flex-col w-full lg:w-1/2 flex-grow"
-						color="white">
-						<Mapjsx onMapClick={handleMapClick} />
+					<div className="flex flex-col w-full lg:w-1/2 flex-grow">
+						<Mapjsx
+							onMapClick={handleMapClick}
+							error={errors.location ? true : false}
+						/>
+						{errors.location && (
+							<p className="error-message ml-5 lg:ml-10 text-red-500">
+								{errors.location}
+							</p>
+						)}
 					</div>
 					<div className="flex flex-col w-full lg:w-1/2">
 						<p className="desc text-left max-w-md">
 							1. Seleccionar en el mapa la ubicación de la tienda que vende el
-							producto.
+							producto. Haga clic en el mapa para seleccionar la ubicación.{" "}
+							<small className="font-bold italic">- Obligatorio</small>
 						</p>
 						<p className="desc text-left max-w-md">
 							2. Llenar los campos con la información del local.
 						</p>
 						<label>
-							<span className="font-inter font-semibold text-base text-gray-700">
-								Nombre de la tienda
+							<span className="font-inter font-semibold text-base text-white">
+								Nombre de la tienda{" "}
+								<small className="font-bold italic">- Obligatorio</small>
 							</span>
 							<textarea
 								name="storeName"
 								value={formData.storeName}
 								onChange={handleInputChange}
 								placeholder="Escriba el nombre de la tienda"
-								required
-								className="form_textarea resize-none"
+								className={`form_textarea resize-none ${
+									errors.storeName ? "error-input" : ""
+								}`}
 							/>
+							{errors.storeName && (
+								<p className="error-message">{errors.storeName}</p>
+							)}
 						</label>
 						<div className="flex flex-row pt-2 w-full mb-4">
 							<label className="w-1/2 mr-1">
-								<span className="font-inter font-semibold text-base text-gray-700">
+								<span className="font-inter font-semibold text-base text-white">
 									Número teléfono
 								</span>
 								<input
@@ -190,17 +316,19 @@ const Form = ({ type, submitting, handleSubmit }) => {
 									pattern="[0-9]{10}"
 									className="form_textarea_sm resize-none"
 								/>
-								<span className="text-gray-500 text-xs"> Solo 10 digitos, no se admiten simbilos ni espacios.</span>
+								<span className="text-gray-500 text-xs">
+									{" "}
+									Solo 10 digitos, no se admiten simbilos ni espacios.
+								</span>
 							</label>
 							<label className="w-1/2 ml-1">
-								<span className="font-inter font-semibold text-base text-gray-700">
+								<span className="font-inter font-semibold text-base text-white">
 									Delivery
 								</span>
 								<select
 									name="delivery"
 									value={formData.delivery}
 									onChange={handleInputChange}
-									required
 									className="form_textarea_sm">
 									<option value="Sin delivery">Sin delivery</option>
 									<option value="Llamada">Llamada</option>
@@ -212,8 +340,23 @@ const Form = ({ type, submitting, handleSubmit }) => {
 							</label>
 						</div>
 					</div>
+					<label className="w-full">
+  <span className="font-inter font-semibold text-base text-white">
+    Especificaciones de dirección
+  </span>
+  <textarea
+    name="specificLoc"
+    value={formData.specificLoc}
+    onChange={handleInputChange}
+    placeholder="Ej: Frente al parque central, local color azul, segundo piso del centro comercial..."
+    className="form_textarea resize-none"
+  />
+  <span className="text-gray-500 text-xs">
+    Proporcione detalles que ayuden a los usuarios a encontrar el producto fácilmente.
+  </span>
+</label>
 				</div>
-				<p className="text-sm text-gray-600 sm:text-xl max-w-2xl text-left ml-4">
+				<p className="text-sm text-white sm:text-xl max-w-2xl text-left ml-4">
 					3. Llenar los campos con la información del producto.
 				</p>
 				<div className="flex flex-wrap w-full">
@@ -229,31 +372,38 @@ const Form = ({ type, submitting, handleSubmit }) => {
 							<input
 								type="file"
 								onChange={handleImageUpload}
-								required
 								accept="image/*"
+								capture="environment"
 								className="src-file"
 							/>
 							{formData.image ? "Cambiar imagen" : "Subir imagen"}
 						</label>
+						{errors.image && <p className="error-message">{errors.image}</p>}
 					</div>
 					<div className="w-full lg:w-1/2">
 						<label>
-							<span className="font-inter font-semibold text-base text-gray-700">
-								Nombre del producto
+							<span className="font-inter font-semibold text-base text-white">
+								Nombre del producto{" "}
+								<small className="font-bold italic">- Obligatorio</small>
 							</span>
 							<textarea
 								name="productName"
 								value={formData.productName}
 								onChange={handleInputChange}
 								placeholder="Escriba el nombre"
-								required
-								className="form_textarea resize-none"
+								className={`form_textarea resize-none ${
+									errors.productName ? "error-input" : ""
+								}`}
 							/>
+							{errors.productName && (
+								<p className="error-message">{errors.productName}</p>
+							)}
 						</label>
 						<div className="flex flex-row pt-2 w-full">
 							<label className="w-1/2 mr-1">
-								<span className="font-inter font-semibold text-base text-gray-700">
-									Precio
+								<span className="font-inter font-semibold text-base text-white">
+									Precio{" "}
+									<small className="font-bold italic">- Obligatorio</small>
 								</span>
 								<input
 									type="number"
@@ -263,50 +413,70 @@ const Form = ({ type, submitting, handleSubmit }) => {
 									placeholder="Escriba el precio"
 									step="0.01"
 									min="0"
-									required
-									className="form_textarea_sm resize-none"
+									className={`form_textarea_sm resize-none ${
+										errors.price ? "error-input" : ""
+									}`}
 								/>
+								{errors.price && (
+									<p className="error-message">{errors.price}</p>
+								)}
 							</label>
 							<label className="w-1/2 ml-1">
-								<span className="font-inter font-semibold text-base text-gray-700">
-									Categoría
+								<span className="font-inter font-semibold text-base text-white">
+									Categoría{" "}
+									<small className="font-bold italic">- Obligatorio</small>
 								</span>
 								<select
 									name="category"
 									value={formData.category}
 									onChange={handleInputChange}
-									required
-									className="form_textarea_sm">
-									<option value="Comestibles">Comidas</option>
+									className={`form_textarea_sm ${
+										errors.category ? "error-input" : ""
+									}`}
+									defaultValue="Otros">
+									<option value="Seleccione una categoria" hidden disabled>
+										Seleccione una categoria
+									</option>
+									<option value="Ropa">Ropa</option>
+									<option value="Tecnología">Tecnología</option>
+									<option value="Comestibles">Comestibles</option>
 									<option value="Hogar">Hogar</option>
 									<option value="Deportes">Deportes</option>
 									<option value="Salud">Salud</option>
+									<option value="Otros">Otros</option>
 								</select>
+								{errors.category && (
+									<p className="error-message">{errors.category}</p>
+								)}
 							</label>
 						</div>
 					</div>
 				</div>
 				<label>
+					<span className="font-inter font-semibold text-base text-white">
+						Descripción del producto
+					</span>
 					<textarea
 						name="description"
 						value={formData.description}
 						onChange={handleInputChange}
 						placeholder="Descripción general del producto"
-						required
-						className="form_textarea_desc resize-none"
+						className={`form_textarea_desc resize-none ${
+							errors.description ? "error-input" : ""
+						}`}
 					/>
+					{errors.description && (
+						<p className="error-message">{errors.description}</p>
+					)}
 				</label>
-				<div className="flex-end mx-3 mb-5 gap-4">
+				<div className="flex-center mx-3 mb-5 gap-4">
 					<Link
 						href="/"
-						className="text-sm hover:underline h-full"
+						className="text-sm hover:underline h-full text-black"
 						onClick={handleCancel}>
 						Cancelar
 					</Link>
-					<button
-						type="submit"
-						disabled={submitting}
-						className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white">
+					<button type="submit" disabled={submitting} className="white_btn">
 						{submitting ? `${type}...` : type}
 					</button>
 				</div>

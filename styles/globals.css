@@ -9,6 +9,29 @@
   @apply w-full gap-16 flex flex-wrap  text-center mx-auto justify-center;
 }
 
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.error-input {
+  border: 1px solid red;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .boton{
   background-color: white;
   border: none;
@@ -110,8 +133,12 @@
   @apply relative flex justify-center items-center flex-col mx-auto ;
 }
 
-.black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+.white_btn {
+  @apply rounded-full border border-white bg-white py-1.5 px-5 text-black transition-all text-center text-sm font-inter flex items-center justify-center;
+}
+
+.white_btn:hover{
+  box-shadow: inset 0 0 0 100px #01a1fd28;
 }
 
 .outline_btn {
@@ -119,7 +146,7 @@
 }
 
 .head_text {
-  @apply mt-8 text-2xl font-inter leading-[1.15] text-black sm:text-3xl font-bold;
+  @apply mt-8 text-2xl font-inter leading-[1.15] text-white sm:text-3xl font-bold;
 }
 
 .orange_gradient {
@@ -135,7 +162,7 @@
 }
 
 .desc {
-  @apply mt-5 text-sm text-gray-600 sm:text-xl max-w-2xl mb-3;
+  @apply mt-5 text-sm text-white sm:text-xl max-w-2xl mb-3;
 }
 
 .search_input {
@@ -143,7 +170,7 @@
 }
 
 .searchbar{
-  @apply w-full font-inter pl-5 pr-12 text-lg focus:ring-0 border-hidden rounded-full h-12;
+  @apply w-full font-inter pl-5 pr-12 text-lg focus:outline-none border-hidden rounded-full h-12;
 }
 
 .copy_btn {
@@ -160,7 +187,7 @@
 
 /* Feed Component */
 .feed {
-  @apply mt-16 mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2 mb-24;
+  @apply mx-auto w-full max-w-3xl flex justify-center items-center flex-col gap-2;
 }
 
 /* Form Component */

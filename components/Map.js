@@ -6,7 +6,7 @@ import {
   Marker
 } from "@react-google-maps/api";
 
-const Map = ({ onMapClick }) => {
+const Map = ({ onMapClick, error }) => {
   const [center, setCenter] = useState({ lat: 18.4649639, lng: -69.9479573 });
   const [markerPosition, setMarkerPosition] = useState(null);
   const { isLoaded } = useLoadScript({
@@ -53,6 +53,7 @@ const Map = ({ onMapClick }) => {
         margin: "0 auto",
         marginTop: "1rem",
         marginBottom: "1rem",
+        border: error ? '2px solid red' : 'none', // Añadimos el borde rojo si hay un error
       }}
     >
       <GoogleMap
@@ -64,6 +65,15 @@ const Map = ({ onMapClick }) => {
           height: "100%",
         }}
         onClick={handleMapClick}
+        options={{
+          styles: error ? [
+            {
+              featureType: "all",
+              elementType: "geometry.stroke",
+              stylers: [{ color: "#FF0000", weight: 2 }]
+            }
+          ] : []
+        }}
       >
         {markerPosition && <Marker position={markerPosition} />}
       </GoogleMap>

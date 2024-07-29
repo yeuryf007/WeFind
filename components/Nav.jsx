@@ -1,185 +1,184 @@
 "use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
-import Login from '@components/Login';
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut as firebaseSignOut,
+} from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@app/firebase/config";
 
 const Nav = () => {
+  const [user, loading] = useAuthState(auth);
+  const [dropdown, setDropdown] = useState(false);
+  const pathname = usePathname();
 
-  const usuariologeado = true;
-  const {providers, getProviders} = useState(null);
-  const [dropdown, setdropdown] = useState(false);
-  const [visiblesearch, setvisiblesearch] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const signInWithGoogle = (e) => {
+    e.stopPropagation(); // Previene que el evento se propague al contenedor padre
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider);
+  };
 
-  useEffect(() => {
-    const setProviders = async () => {
-      /*const response = await getProviders();
+  const signOut = () => {
+    firebaseSignOut(auth);
+    setDropdown(false);
+  };
 
-      setProviders(response);*/
+  const toggleDropdown = () => {
+    if (user) {
+      setDropdown((prev) => !prev);
     }
-
-    setProviders();
-  }, [])
+  };
 
   return (
-    <nav className='flex justify-between w-full pt-3 pb-3' id='navbars'>
-      <Link href="/" className='flex gap-2 flex-center'>
-        <Image src="/assets/images/logo.svg" alt="WeFind Logo" width={246} height={70} className='object-contain'/>
-      </Link>
+    <nav className="flex justify-between w-full pt-3 pb-3" id="navbars">
       
-      {/* Navegacion Desktop */}
 
-      <div className='sm:flex hidden w-7/12 justify-between items-center'>
-                
-        <div className='flex gap-5 align-center'>
-
-          <Link href="/categorias" className='navtext'>
+      {/* Navegación Desktop */}
+      <div className="lg:flex hidden w-full justify-between items-center">
+      <Link href="/" className="flex gap-2 flex-center">
+        <Image
+          src="/assets/images/logo.svg"
+          alt="WeFind Logo"
+          width={246}
+          height={70}
+          className="object-contain"
+        />
+      </Link>
+        <div className="flex gap-8 align-center">
+          <Link href="/" className="navtext">
+            Inicio
+          </Link>
+          
+          <Link href="/categorias" className="navtext">
             Productos
           </Link>
-          
-          <Link href="/crear_post" className='navtext'>
-            Publicar Productos
-          </Link>
 
-          
-        </div>
-        
-
-        {usuariologeado ? (
-          <div className='flex gap-3 md:gap-5'>
-
-
-            <Link href='/' className='items-center justify-center'>
-              <Image src="/assets/images/search-w.svg" width={45} height={45} alt='search'/>
+          {user && (
+            <Link href="/crear_post" className="navtext">
+              Publicar Productos
             </Link>
-            
-
-            <div className='flex relative'>
-              <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
-                onClick={() => setdropdown ((prev) => !prev)}/>
-              {dropdown && (
-                <div className='dropdown'>
-                  <button type='button' onClick={signOut} className='w-full dropdown_link hover:bg-slate-800 hover:text-white'>
-                     Cerrar sesión
-                     </button>
-                </div>
-              )}
-              </div>
-          </div>
-        ): (
-          <>
-          <div className='flex gap-3 md:gap-5'>
-            
-            <Image src="/assets/images/search-w.svg" width={37} height={37} alt='search' href="/"/>
-              
-            
-            <div className='flex relative'>
-              <Image src="/assets/images/profile.png" width={45} height={45} className="rounded-full" alt='profile'
-                onClick={() => setdropdown ((prev) => !prev)}/>
-              {dropdown && (
-                <div className='dropdown'>
-                  <Login/>
-                </div>
-              )}
-              </div>
-          </div>
-              
-              {providers &&
-                Object.values(providers).map((provider) => (
-                  <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                    Ingresar
-                  </button>
-                ))
-              }
-
-          </>
-          
-        )
-      }
-      </div>
-
-      {/* Navegacion Movil */}
-
-        <div className='sm:hidden flex relative'>
-          {usuariologeado ? (
-            <div className='flex border-l-white border-l-2'>
-              <Image src="/assets/images/dropdown.svg" width={65} height={37} className="rounded-full" alt='dropdown'
-              onClick={() => setdropdown ((prev) => !prev)}/>
-
-              {dropdown && (
-                <div className='dropdown'>
-                  <Link href="/categorias"
-                  className='dropdown_link'
-                  onClick={() => setdropdown(false)}>
-                    Productos
-                  </Link>
-
-                  <Link href="/crear_post"
-                  className='dropdown_link'
-                  onClick={() => setdropdown(false)}>
-                    Añadido
-                  </Link>
-
-                  <Link href="/" className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white" onClick={() => {
-                  setdropdown(false);
-                    signOut;
-                  }}>
-                      Cerrar Sesión
-                  </Link>
-                </div>
-              )}
-            </div>
-          ): (
-            <>
-              {/*{providers &&
-                Object.values(providers).map((provider) => (
-                  <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                    Sign In
-                  </button>
-                  
-                ))
-              }*/}
-              
-              <Image src="/assets/images/dropdown.svg" width={65} height={37} alt='dropdown'
-              onClick={() => setdropdown ((prev) => !prev)}/>
-                {dropdown && (
-                  
-                  <div className='dropdown'>
-                    <Link href="/categorias"
-                    className='dropdown_link'
-                    onClick={() => setdropdown(false)}>
-                      Categorias
-                    </Link>
-
-                    <Link href="/crear_post"
-                    className='dropdown_link'
-                    onClick={() => setdropdown(false)}>
-
-                      Acciones
-                    </Link>
-                    
-                    <button 
-                      className='dropdown_link'
-                      onClick={() => setIsLoginOpen((prev) => !prev)}
-                    >
-                      Login
-                    </button>
-                    {isLoginOpen && (
-                      <div className="nested-dropdown-content">
-                        <Login />
-                      </div>
-                      )}
-                      </div>
-                  
-                )}
-            </>
           )}
         </div>
-    </nav>
-  )
-}
 
-export default Nav
+        {loading ? (
+  <div className="w-40 h-10 bg-gray-200 rounded animate-pulse"></div>
+) : user ? (
+  <div className="flex gap-3 md:gap-5">
+    <div className="flex relative">
+      <Image
+        src={user.photoURL || "/assets/images/profile.png"}
+        width={45}
+        height={45}
+        className="rounded-full cursor-pointer"
+        alt="profile"
+        onClick={toggleDropdown}
+        onError={(e) => {
+          e.target.src = "/assets/images/profile.png";
+        }}
+      />
+      {dropdown && (
+        <div className="dropdown">
+          <Link
+            href={`/user-products/${user.uid}`}
+            className="w-full dropdown_link hover:bg-slate-800 hover:text-white"
+            onClick={() => setDropdown(false)}
+          >
+            Mis Productos
+          </Link>
+          <button
+            type="button"
+            onClick={signOut}
+            className="w-full dropdown_link hover:bg-slate-800 hover:text-white">
+            Cerrar sesión
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+) : (
+  <div className="flex gap-3 md:gap-5">
+    <button onClick={signInWithGoogle} className="white_btn">
+      Iniciar sesión con Google
+    </button>
+  </div>
+)}
+</div>
+
+{/* Navegación Móvil */}
+<div className="lg:hidden flex relative w-full justify-between items-center">
+  <Link href="/" className="flex gap-2 flex-center">
+    <Image
+      src="/assets/images/logo.svg"
+      alt="WeFind Logo"
+      width={226}
+      height={70}
+      className="object-contain"
+    />
+  </Link>
+  <Image
+    src={dropdown ? "/assets/icons/close.svg" : "/assets/icons/dropdown.svg"}
+    width={45}
+    height={37}
+    alt={dropdown ? "close" : "dropdown"}
+    onClick={() => setDropdown((prev) => !prev)}
+    className="cursor-pointer"
+  />
+
+  {dropdown && (
+    <div className="dropdown">
+      <Link
+        href="/"
+        className="dropdown_link"
+        onClick={() => setDropdown(false)}>
+        Inicio
+      </Link>
+      <Link
+        href="/categorias"
+        className="dropdown_link"
+        onClick={() => setDropdown(false)}>
+        Productos
+      </Link>
+
+      {user && (
+        <>
+          <Link
+            href="/crear_post"
+            className="dropdown_link"
+            onClick={() => setDropdown(false)}>
+            Publicar Productos
+          </Link>
+          <Link
+            href={`/user-products/${user.uid}`}
+            className="dropdown_link"
+            onClick={() => setDropdown(false)}>
+            Mis Productos
+          </Link>
+        </>
+      )}
+
+      {user ? (
+        <button
+          onClick={signOut}
+          className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
+          Cerrar Sesión
+        </button>
+      ) : (
+        <button
+          onClick={signInWithGoogle}
+          className="w-full dropdown_link border-t-2 hover:bg-slate-800 hover:text-white">
+          Iniciar sesión con Google
+        </button>
+      )}
+    </div>
+  )}
+</div>
+    </nav>
+  );
+};
+
+export default Nav;
