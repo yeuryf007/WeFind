@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, GeoPoint } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, GeoPoint, getDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '@app/firebase/config';
 import Image from 'next/image';
@@ -34,6 +34,8 @@ const UserProducts = ({ uid }) => {
   const [tempMessage, setTempMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminStoreName, setAdminStoreName] = useState('');
 
   // Filtro de barra de busqueda
   useEffect(() => {
@@ -47,13 +49,24 @@ const UserProducts = ({ uid }) => {
     setSearchTerm(e.target.value);
   };
 
-  // Comprueba si el usuario está autenticado y si es el dueño de los productos
+  // Comprueba si el usuario está autenticado y si es admin
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser && currentUser.uid === uid) {
-        setUser(currentUser);
-        fetchProducts(currentUser.uid);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const adminDocRef = doc(db, 'Admins', `${currentUser.uid}-admin`);
+        const adminDocSnap = await getDoc(adminDocRef);
+        
+        if (adminDocSnap.exists() && adminDocSnap.data().admin === true) {
+          setIsAdmin(true);
+          setAdminStoreName(adminDocSnap.data().Admin_store_name || '');
+          fetchAdminProducts(currentUser.uid, adminDocSnap.data().Admin_store_name);
+        } else if (currentUser.uid === uid) {
+          setUser(currentUser);
+          fetchProducts(currentUser.uid);
+        } else {
+          router.push('/');
+        }
       } else {
         router.push('/');
       }
@@ -61,6 +74,28 @@ const UserProducts = ({ uid }) => {
 
     return () => unsubscribe();
   }, [uid, router]);
+
+  // Función para obtener productos para admins
+  const fetchAdminProducts = async (userId, adminStoreName) => {
+    let q;
+    if (adminStoreName === 'wefind') {
+      q = query(collection(db, 'Products'));
+    } else {
+      q = query(collection(db, 'Products'), where('Store_name', '==', adminStoreName));
+    }
+    
+    const querySnapshot = await getDocs(q);
+    const productsData = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        Location: data.Location ? { lat: data.Location.latitude, lng: data.Location.longitude } : null
+      };
+    });
+    setProducts(productsData);
+    setLoading(false);
+  };
 
   // Redirige a la página de detalles del producto
   const handleProductClick = (product) => {
@@ -115,7 +150,11 @@ const UserProducts = ({ uid }) => {
     try {
       await deleteDoc(doc(db, 'Products', deleteProduct.id));
       setDeleteProduct(null);
-      fetchProducts(user.uid);
+      if (isAdmin) {
+        fetchAdminProducts(user.uid, adminStoreName);
+      } else {
+        fetchProducts(user.uid);
+      }
     } catch (error) {
       console.error('Error deleting product:', error);
     }
@@ -199,7 +238,11 @@ const UserProducts = ({ uid }) => {
       setEditProduct(null);
       setImageUpload(null);
       setErrors({});
-      fetchProducts(user.uid);
+      if (isAdmin) {
+        fetchAdminProducts(user.uid, adminStoreName);
+      } else {
+        fetchProducts(user.uid);
+      }
     } catch (error) {
       console.error('Error updating product:', error);
       setTempMessage("Ha ocurrido un error al actualizar el producto.");
@@ -215,7 +258,9 @@ const UserProducts = ({ uid }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center text-white">Mis Productos</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-white">
+        {isAdmin ? 'Productos Administrados' : 'Mis Productos'}
+      </h1>
       {/* Search Bar */}
       <div className="mb-6 relative">
         <input
